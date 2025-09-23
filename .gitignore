@@ -1,0 +1,16 @@
+# root ignores
+.DS_Store
+.env
+.env.*
+*.log
+
+# Node
+node_modules/
+
+# Frontend
+frontend/dist/
+frontend/.vite/
+frontend/.env*
+
+# Backend
+backend/.env
