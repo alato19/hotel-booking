@@ -4,15 +4,33 @@ export default function MainLayout () {
   return (
     <div>
       <header className="border-bottom">
-        <nav className="container d-flex align-items-center justify-content-between py-3">
-          <Link to="/" className="text-decoration-none h5 m-0">Hotel</Link>
-          <div className="d-flex ms-3 gap-3">
-            <NavLink to="/rooms" className="text-decoration-none">Rooms</NavLink>
-            <NavLink to="/bookings" className="text-decoration-none">My Bookings</NavLink>
-            <NavLink to="/admin" className="text-decoration-none">Admin</NavLink>
-            <NavLink to="/login" className="text-decoration-none">Login</NavLink>
-          </div>
-        </nav>
+        <div class="header-top">
+                <div class="header-top-left">
+                    <span><i class="ion-android-cloud-outline"></i>28 °C</span>
+                    <span><i class="ion-ios-location-outline"></i> Durrës, Albania</span>
+                    <span><i class="fa fa-phone" aria-hidden="true"></i> +355-68-000-0000</span>
+                </div>
+                <div class="header-top-right">
+                    <ul>
+                        <li class="dropdown"><a href="login.html" title="LOGIN" class="dropdown-toggle">LOGIN</a></li>
+                        <li class="dropdown"><a href="register.html" title="REGISTER" class="dropdown-toggle">REGISTER</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">USD <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="active"><a href="#">USD</a></li>
+                                <li><a href="#">EUR</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">ENG <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="active"><a href="#">ENG</a></li>
+                                <li><a href="#">SQ</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
       </header>
 
       <main className="container py-4">
