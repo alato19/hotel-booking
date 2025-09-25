@@ -1,0 +1,16 @@
+.custom-navbar {
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.custom-navbar .nav-link {
+  color: white !important;
+}
+
+.custom-navbar.scrolled {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.custom-navbar .scrolled .nav-link {
+  color: #fff !important;
+}

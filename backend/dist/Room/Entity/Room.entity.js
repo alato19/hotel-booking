@@ -20,6 +20,9 @@ let RoomEntity = class RoomEntity {
     hasBalcony;
     oceanView;
     tvService;
+    availableFrom;
+    availableTo;
+    isBooked;
     isPublished;
 };
 exports.RoomEntity = RoomEntity;
@@ -55,6 +58,18 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], RoomEntity.prototype, "tvService", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'date', nullable: true }),
+    __metadata("design:type", Date)
+], RoomEntity.prototype, "availableFrom", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'date', nullable: true }),
+    __metadata("design:type", Date)
+], RoomEntity.prototype, "availableTo", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], RoomEntity.prototype, "isBooked", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)

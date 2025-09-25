@@ -12,10 +12,10 @@ export class RoomEntity {
   description: string;
 
   @Column()
-  price:number;
+  price: number;
 
   @Column()
-  maxPeople:number;
+  maxPeople: number;
 
   @Column()
   hasBalcony: boolean;
@@ -25,6 +25,15 @@ export class RoomEntity {
 
   @Column()
   tvService: boolean;
+
+  @Column({ type: 'date', nullable: true })
+  availableFrom: Date;
+
+  @Column({ type: 'date', nullable: true })
+  availableTo: Date;
+
+  @Column({ default: false })
+  isBooked: boolean;
 
   @Column()
   isPublished: boolean;

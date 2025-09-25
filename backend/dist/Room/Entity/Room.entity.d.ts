@@ -7,5 +7,8 @@ export declare class RoomEntity {
     hasBalcony: boolean;
     oceanView: boolean;
     tvService: boolean;
+    availableFrom: Date;
+    availableTo: Date;
+    isBooked: boolean;
     isPublished: boolean;
 }
