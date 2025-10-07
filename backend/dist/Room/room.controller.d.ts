@@ -6,5 +6,5 @@ export declare class RoomController {
     createRoom(body: RoomDto): Promise<import("./Entity/Room.entity").RoomEntity>;
     deleteRoom(id: number): Promise<any>;
     updateRoom(id: number, updateRoom: RoomDto): Promise<import("./Entity/Room.entity").RoomEntity | null>;
-    getAllRooms(): Promise<import("./Entity/Room.entity").RoomEntity[]>;
+    getAllRooms(): Promise<any>;
 }

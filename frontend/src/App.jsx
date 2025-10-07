@@ -5,18 +5,21 @@ import RoomDetail from "./pages/RoomDetail";
 import Login from "./pages/Login";
 import MyBookings from "./pages/MyBookings";
 import AdminDashboard from "./pages/AdminDashboard";
+import { RoomProvider } from "./context/RoomContext.jsx";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/rooms" element={<Rooms />} />
-        <Route path="/rooms/:id" element={<RoomDetail />} />
-        <Route path="/bookings" element={<MyBookings />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <RoomProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/rooms/:id" element={<RoomDetail />} />
+          <Route path="/bookings" element={<MyBookings />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </RoomProvider>
     </BrowserRouter>
   );
 }

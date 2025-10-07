@@ -3,17 +3,16 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { getRooms } from "../services/rooms";
-import { currentUser } from "../mockdata/currentUser";
 import optHeaderBackground from "../assets/header.jpg";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
+import { useRoomContext } from "../context/RoomContext";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function AdminDashboard() {
-  const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { rooms, refreshRooms } = useRoomContext();
   const [err, setErr] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -29,19 +28,8 @@ export default function AdminDashboard() {
   });
 
   useEffect(() => {
-    loadRooms();
+    refreshRooms().finally(() => setLoading(false));
   }, []);
-
-  async function loadRooms() {
-    try {
-      const data = await getRooms();
-      setRooms(data);
-    } catch (e) {
-      setErr(e.message || "Error fetching rooms");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   async function handleCreateRoom(e) {
     e.preventDefault();
@@ -52,23 +40,12 @@ export default function AdminDashboard() {
         body: JSON.stringify(newRoom),
       });
       if (!res.ok) throw new Error("Failed to create room");
-      await loadRooms();
+
+      await refreshRooms();
       setShowModal(false);
-      setNewRoom({
-        title: "",
-        description: "",
-        price: "",
-        maxPeople: "",
-        hasBalcony: false,
-        oceanView: false,
-        tvService: false,
-        availableFrom: "",
-        availableTo: "",
-        isBooked: false,
-        isPublished: true,
-      });
-    } catch (e) {
-      alert(e.message);
+    } catch (error) {
+      console.error(error);
+      alert("Error creating room");
     }
   }
 
@@ -80,11 +57,15 @@ export default function AdminDashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newRoom),
       });
+      const data = await res.json();
+      console.log("PATCH response:", data);
       if (!res.ok) throw new Error("Failed to update room");
-      await loadRooms();
+
+      await refreshRooms();
       setShowModal(false);
-    } catch (e) {
-      alert(e.message);
+    } catch (error) {
+      console.error(error);
+      alert("Error updating room");
     }
   }
 
@@ -96,20 +77,15 @@ export default function AdminDashboard() {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete room");
-      await loadRooms();
-    } catch (e) {
-      alert(e.message);
+
+      await refreshRooms();
+    } catch (error) {
+      console.error(error);
+      alert("Error deleting room");
     }
   }
 
-  if (currentUser.role !== "admin") {
-    return (
-      <p className="text-danger text-center mt-5">Access denied. Admins only</p>
-    );
-  }
-
   if (loading) return <p className="text-center mt-5">Loading...</p>;
-  if (err) return <p className="text-danger text-center mt-5">{err}</p>;
 
   return (
     <div className="position-relative">

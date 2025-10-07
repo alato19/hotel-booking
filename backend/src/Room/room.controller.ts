@@ -8,15 +8,14 @@ import {
   Post,
   Delete,
   HttpException,
-  HttpStatus
+  HttpStatus,
 } from '@nestjs/common';
 import { RoomService } from './room.service';
 import { RoomDto } from './DTO/Room.dto';
 
-
 @Controller('room')
 export class RoomController {
-  constructor(private readonly roomService:RoomService) {}
+  constructor(private readonly roomService: RoomService) {}
 
   @Post('create')
   public async createRoom(@Body() body: RoomDto) {
@@ -33,21 +32,22 @@ export class RoomController {
   }
 
   @Patch(':id')
-  async updateRoom(
-    @Param('id') id: number,
-    @Body() updateRoom: RoomDto
-  ) {
+  async updateRoom(@Param('id') id: number, @Body() updateRoom: RoomDto) {
     return this.roomService.update(id, updateRoom);
   }
 
   @Get('all')
-  public async getAllRooms() {
+  public async getAllRooms(): Promise<any> {
     try {
-      return await this.roomService.findAll();
+      const result = await this.roomService.findAll();
+      return {
+        result,
+        status: 200,
+      };
     } catch (error) {
       throw new HttpException(
         'Error from server',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }

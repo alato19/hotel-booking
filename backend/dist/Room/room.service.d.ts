@@ -5,7 +5,7 @@ export declare class RoomService {
     private roomRepository;
     constructor(roomRepository: Repository<RoomEntity>);
     create(createRoom: RoomDto): Promise<RoomEntity>;
-    findAll(): Promise<RoomEntity[]>;
+    findAll(): Promise<any>;
     remove(id: number): Promise<any>;
     update(id: number, payload: RoomDto | Partial<RoomDto>): Promise<RoomEntity | null>;
 }

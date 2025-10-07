@@ -37,7 +37,11 @@ let RoomController = class RoomController {
     }
     async getAllRooms() {
         try {
-            return await this.roomService.findAll();
+            const result = await this.roomService.findAll();
+            return {
+                result,
+                status: 200,
+            };
         }
         catch (error) {
             throw new common_1.HttpException('Error from server', common_1.HttpStatus.INTERNAL_SERVER_ERROR);

@@ -8,7 +8,7 @@ import { RoomDto } from './DTO/Room.dto';
 export class RoomService {
   constructor(
     @InjectRepository(RoomEntity)
-    private roomRepository: Repository<RoomEntity>
+    private roomRepository: Repository<RoomEntity>,
   ) {}
 
   public async create(createRoom: RoomDto): Promise<RoomEntity> {
@@ -16,7 +16,7 @@ export class RoomService {
     return await this.roomRepository.save(newRoom);
   }
 
-  public async findAll(): Promise<RoomEntity[]> {
+  public async findAll(): Promise<any> {
     return await this.roomRepository.find();
   }
 
@@ -24,7 +24,10 @@ export class RoomService {
     return await this.roomRepository.delete(id);
   }
 
-  async update(id: number, payload: RoomDto | Partial<RoomDto>): Promise<RoomEntity | null> {
+  async update(
+    id: number,
+    payload: RoomDto | Partial<RoomDto>,
+  ): Promise<RoomEntity | null> {
     await this.roomRepository.update(id, payload);
     return this.roomRepository.findOne({ where: { id } });
   }
