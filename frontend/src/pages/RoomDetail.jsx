@@ -21,8 +21,9 @@ const roomImages = {
 
 export default function RoomDetail() {
   const { id } = useParams();
+
   const { rooms } = useRoomContext();
-  const room = rooms.find((r) => String(r.id) === id);
+  const room = rooms.find((room) => room?.id === parseInt(id));
 
   if (!room) return <p className="text-center mt-5">Room not found</p>;
 

@@ -42,8 +42,8 @@ function NavBar() {
             <Nav.Link as={NavLink} to="/rooms">
               ROOMS
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/about">
-              BOOKING
+            <Nav.Link as={NavLink} to="/bookings">
+              BOOKINGS
             </Nav.Link>
             <Nav.Link as={NavLink} to="/contact">
               CONTACT

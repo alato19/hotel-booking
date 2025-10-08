@@ -21,20 +21,6 @@ let RoomController = class RoomController {
     constructor(roomService) {
         this.roomService = roomService;
     }
-    async createRoom(body) {
-        try {
-            return await this.roomService.create(body);
-        }
-        catch (error) {
-            throw new common_1.HttpException('Could not create room', common_1.HttpStatus.BAD_REQUEST);
-        }
-    }
-    async deleteRoom(id) {
-        return this.roomService.remove(id);
-    }
-    async updateRoom(id, updateRoom) {
-        return this.roomService.update(id, updateRoom);
-    }
     async getAllRooms() {
         try {
             const result = await this.roomService.findAll();
@@ -47,8 +33,28 @@ let RoomController = class RoomController {
             throw new common_1.HttpException('Error from server', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async createRoom(body) {
+        try {
+            return await this.roomService.create(body);
+        }
+        catch (error) {
+            throw new common_1.HttpException('Could not create room', common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async updateRoom(id, updateRoom) {
+        return this.roomService.update(id, updateRoom);
+    }
+    async deleteRoom(id) {
+        return this.roomService.remove(id);
+    }
 };
 exports.RoomController = RoomController;
+__decorate([
+    (0, common_1.Get)('all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], RoomController.prototype, "getAllRooms", null);
 __decorate([
     (0, common_1.Post)('create'),
     __param(0, (0, common_1.Body)()),
@@ -56,13 +62,6 @@ __decorate([
     __metadata("design:paramtypes", [Room_dto_1.RoomDto]),
     __metadata("design:returntype", Promise)
 ], RoomController.prototype, "createRoom", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], RoomController.prototype, "deleteRoom", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -72,11 +71,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RoomController.prototype, "updateRoom", null);
 __decorate([
-    (0, common_1.Get)('all'),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], RoomController.prototype, "getAllRooms", null);
+], RoomController.prototype, "deleteRoom", null);
 exports.RoomController = RoomController = __decorate([
     (0, common_1.Controller)('room'),
     __metadata("design:paramtypes", [room_service_1.RoomService])

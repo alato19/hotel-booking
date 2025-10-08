@@ -17,25 +17,6 @@ import { RoomDto } from './DTO/Room.dto';
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
-  @Post('create')
-  public async createRoom(@Body() body: RoomDto) {
-    try {
-      return await this.roomService.create(body);
-    } catch (error) {
-      throw new HttpException('Could not create room', HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  @Delete(':id')
-  async deleteRoom(@Param('id') id: number) {
-    return this.roomService.remove(id);
-  }
-
-  @Patch(':id')
-  async updateRoom(@Param('id') id: number, @Body() updateRoom: RoomDto) {
-    return this.roomService.update(id, updateRoom);
-  }
-
   @Get('all')
   public async getAllRooms(): Promise<any> {
     try {
@@ -50,5 +31,24 @@ export class RoomController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  @Post('create')
+  public async createRoom(@Body() body: RoomDto) {
+    try {
+      return await this.roomService.create(body);
+    } catch (error) {
+      throw new HttpException('Could not create room', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Patch(':id')
+  async updateRoom(@Param('id') id: number, @Body() updateRoom: RoomDto) {
+    return this.roomService.update(id, updateRoom);
+  }
+
+  @Delete(':id')
+  async deleteRoom(@Param('id') id: number) {
+    return this.roomService.remove(id);
   }
 }
