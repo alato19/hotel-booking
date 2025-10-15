@@ -4,10 +4,12 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../../assets/sky-logo-header.png";
+import { useAuth } from "../../context/AuthContext";
 import "../NavBar/NavBar.css";
 
 function NavBar() {
   const [scrolled, setScrolled] = useState(false);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const onScroll = () => {
@@ -48,6 +50,19 @@ function NavBar() {
             <Nav.Link as={NavLink} to="/contact">
               CONTACT
             </Nav.Link>
+            {user ? (
+              <Nav.Link onClick={logout}>LOGOUT</Nav.Link>
+            ) : (
+              <>
+                <Nav.Link as={NavLink} to="/login">
+                  LOGIN
+                </Nav.Link>
+
+                <Nav.Link as={NavLink} to="/register">
+                  REGISTER
+                </Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

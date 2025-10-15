@@ -5,12 +5,18 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
-  username: string;
+  @Column()
+  firstname: string;
+
+  @Column()
+  lastname: string;
+
+  @Column()
+  email: string;
 
   @Column()
   password: string;
 
-  @Column({ default: 'public' })
-  role: 'admin' | 'registered' | 'public';
+  @Column()
+  roles: string;
 }

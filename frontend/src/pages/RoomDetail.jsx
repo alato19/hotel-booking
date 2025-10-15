@@ -43,8 +43,8 @@ export default function RoomDetail() {
         }}
       >
         <div className="container text-center">
-          <h1 className="display-3 fw-bold">{room.title}</h1>
-          <p className="lead">
+          <h1 className="display-3 fw-bold mt-5">{room.title}</h1>
+          <p className="lead text-white">
             {room.oceanView ? "Ocean View" : "Comfort & Relaxation"}
           </p>
         </div>

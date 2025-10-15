@@ -8,6 +8,7 @@ import RoomCard from "../components/RoomsCard";
 import Footer from "../components/Footer/Footer";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Home() {
   const { rooms } = useRoomContext();
@@ -47,7 +48,7 @@ export default function Home() {
       <NavBar />
 
       <section
-        className="text-white d-flex align-items-center position-relative"
+        className="text-white d-flex flex-column justify-content-center align-items-center text-center"
         style={{
           backgroundImage: `url(${headerBackground})`,
           backgroundSize: "cover",
@@ -58,63 +59,80 @@ export default function Home() {
       >
         <div className="container header">
           <h1 className="display-3 fw-bold">Welcome to Paradise</h1>
-          <p className="d-flex align-items-center justify-content-center text-white">
-            <span className="border-top mx-3" style={{ width: "60px" }}></span>
-            Hotels and Resorts
-            <span className="border-top mx-3" style={{ width: "60px" }}></span>
-          </p>
+          <p className="lead text-white">Hotels and Resorts</p>
         </div>
 
-        <div className="container position-absolute top-50 start-50 translate-middle">
+        <div className="container">
           <Form
-            className="row g-3 bg-white text-dark p-4 rounded shadow align-items-end"
+            className="row g-0 justify-content-center shadow"
             onSubmit={(e) => e.preventDefault()}
           >
-            <div className="col-md-3">
+            {/* Arrival Date */}
+            <div className="col-md-3 p-3 bg-white border">
               <Form.Label className="fw-semibold small text-uppercase text-muted">
                 Arrival Date
               </Form.Label>
-              <Form.Control
-                type="date"
-                value={filters.arrival}
-                onChange={(e) =>
-                  setFilters({ ...filters, arrival: e.target.value })
-                }
-              />
+              <div className="input-group">
+                <Form.Control
+                  type="date"
+                  value={filters.arrival}
+                  onChange={(e) =>
+                    setFilters({ ...filters, arrival: e.target.value })
+                  }
+                  className="border-0 fs-4 fw-light text-center"
+                />
+                <span className="input-group-text bg-white border-0">
+                  <i className="fas text-muted"></i>
+                </span>
+              </div>
             </div>
 
-            <div className="col-md-3">
+            {/* Departure Date */}
+            <div className="col-md-3 p-3 bg-white border">
               <Form.Label className="fw-semibold small text-uppercase text-muted">
                 Departure Date
               </Form.Label>
-              <Form.Control
-                type="date"
-                value={filters.departure}
-                onChange={(e) =>
-                  setFilters({ ...filters, departure: e.target.value })
-                }
-              />
+              <div className="input-group">
+                <Form.Control
+                  type="date"
+                  value={filters.departure}
+                  onChange={(e) =>
+                    setFilters({ ...filters, departure: e.target.value })
+                  }
+                  className="border-0 fs-4 fw-light text-center"
+                />
+                <span className="input-group-text bg-white border-0">
+                  <i className="fas text-muted"></i>
+                </span>
+              </div>
             </div>
 
-            <div className="col-md-2">
+            {/* People */}
+            <div className="col-md-2 p-3 bg-white border">
               <Form.Label className="fw-semibold small text-uppercase text-muted">
                 People
               </Form.Label>
-              <Form.Control
-                type="number"
-                min="1"
-                value={filters.people}
-                onChange={(e) =>
-                  setFilters({ ...filters, people: e.target.value })
-                }
-              />
+              <div className="input-group">
+                <Form.Control
+                  type="number"
+                  min="1"
+                  value={filters.people}
+                  onChange={(e) =>
+                    setFilters({ ...filters, people: e.target.value })
+                  }
+                  className="border-0 fs-4 fw-light text-center"
+                />
+                <span className="input-group-text bg-white border-0">
+                  <i className="fas fa-user text-muted"></i>
+                </span>
+              </div>
             </div>
 
-            <div className="col-md-2 d-flex">
+            {/* Submit button */}
+            <div className="col-md-2 p-3 bg-primary d-flex align-items-center justify-content-center">
               <Button
                 type="submit"
-                className="w-100 fw-bold text-uppercase"
-                variant="dark"
+                className="w-100 h-100 fw-bold text-uppercase"
                 style={{ backgroundColor: "#8b6f47", border: "none" }}
               >
                 Check Availability

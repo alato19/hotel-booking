@@ -1,8 +1,6 @@
-export declare class UserEntity {
-    id: number;
+export declare class RegisterDto {
     firstname: string;
     lastname: string;
     email: string;
     password: string;
-    roles: string;
 }

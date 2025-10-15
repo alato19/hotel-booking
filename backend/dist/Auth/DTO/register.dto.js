@@ -9,42 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserEntity = void 0;
-const typeorm_1 = require("typeorm");
-let UserEntity = class UserEntity {
-    id;
+exports.RegisterDto = void 0;
+const class_validator_1 = require("class-validator");
+class RegisterDto {
     firstname;
     lastname;
     email;
     password;
-    roles;
-};
-exports.UserEntity = UserEntity;
+}
+exports.RegisterDto = RegisterDto;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], UserEntity.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserEntity.prototype, "firstname", void 0);
+], RegisterDto.prototype, "firstname", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserEntity.prototype, "lastname", void 0);
+], RegisterDto.prototype, "lastname", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], UserEntity.prototype, "email", void 0);
+], RegisterDto.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserEntity.prototype, "password", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], UserEntity.prototype, "roles", void 0);
-exports.UserEntity = UserEntity = __decorate([
-    (0, typeorm_1.Entity)('user')
-], UserEntity);
-//# sourceMappingURL=User.entity.js.map
+], RegisterDto.prototype, "password", void 0);
+//# sourceMappingURL=register.dto.js.map
