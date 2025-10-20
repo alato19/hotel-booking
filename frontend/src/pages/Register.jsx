@@ -16,7 +16,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await registerUser(values);
-    //navigate("/");
+    navigate("/login");
   };
 
   const handleChange = (event) => {

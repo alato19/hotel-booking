@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoomEntity = void 0;
 const typeorm_1 = require("typeorm");
+const Booking_entity_1 = require("../../Booking/Entity/Booking.entity");
 let RoomEntity = class RoomEntity {
     id;
     title;
@@ -24,6 +25,7 @@ let RoomEntity = class RoomEntity {
     availableTo;
     isBooked;
     isPublished;
+    bookings;
 };
 exports.RoomEntity = RoomEntity;
 __decorate([
@@ -74,6 +76,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], RoomEntity.prototype, "isPublished", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Booking_entity_1.BookingEntity, (booking) => booking.room),
+    __metadata("design:type", Array)
+], RoomEntity.prototype, "bookings", void 0);
 exports.RoomEntity = RoomEntity = __decorate([
     (0, typeorm_1.Entity)('room')
 ], RoomEntity);

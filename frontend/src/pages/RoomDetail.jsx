@@ -1,5 +1,7 @@
-import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRoomContext } from "../context/RoomContext";
+import { useAuth } from "../context/AuthContext";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
@@ -19,13 +21,39 @@ const roomImages = {
   6: room6,
 };
 
+const handleBooking = async () => {
+  if (!user) {
+    navigate("/login");
+    return;
+  }
+  try {
+    const res = await axios.post(`http://localhost:3000/booking`, {
+      userId: user.id,
+      roomId: room.id,
+    });
+    alert(`Booking successful! ID: ${res.data.id}`);
+  } catch (error) {
+    console.error("Booking error:", error);
+    alert("Booking failed, please try again.");
+  }
+};
+
 export default function RoomDetail() {
   const { id } = useParams();
-
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const { rooms } = useRoomContext();
   const room = rooms.find((room) => room?.id === parseInt(id));
 
   if (!room) return <p className="text-center mt-5">Room not found</p>;
+
+  const handleBooking = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    alert(`Booking confirmed for ${room.title}!`);
+  };
 
   return (
     <div className="position-relative">
@@ -90,11 +118,16 @@ export default function RoomDetail() {
             </ul>
 
             <button
+              onClick={handleBooking}
               className="btn btn-lg w-100 fw-bold"
               style={{ backgroundColor: "#8b6f47", color: "white" }}
-              disabled={room.isBooked}
+              disabled={!user || room.isBooked}
             >
-              {room.isBooked ? "Currently Unavailable" : "Book Now"}
+              {!user
+                ? "Login to Book"
+                : room.isBooked
+                ? "Currently Unavailable"
+                : "Book Now"}
             </button>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { BookingEntity } from 'src/Booking/Entity/Booking.entity';
 export declare class RoomEntity {
     id: number;
     title: string;
@@ -11,4 +12,5 @@ export declare class RoomEntity {
     availableTo: Date;
     isBooked: boolean;
     isPublished: boolean;
+    bookings: BookingEntity[];
 }

@@ -14,6 +14,8 @@ const room_module_1 = require("./Room/room.module");
 const Room_entity_1 = require("./Room/Entity/Room.entity");
 const auth_module_1 = require("./Auth/auth.module");
 const User_entity_1 = require("./User/Entity/User.entity");
+const booking_module_1 = require("./Booking/booking.module");
+const Booking_entity_1 = require("./Booking/Entity/Booking.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,12 +29,13 @@ exports.AppModule = AppModule = __decorate([
                 username: 'root',
                 password: 'HOhodbDB@2025@.',
                 database: 'hotel',
-                entities: [Room_entity_1.RoomEntity, User_entity_1.UserEntity],
+                entities: [Room_entity_1.RoomEntity, User_entity_1.UserEntity, Booking_entity_1.BookingEntity],
                 synchronize: true,
             }),
             user_module_1.UserModule,
             room_module_1.RoomModule,
             auth_module_1.AuthModule,
+            booking_module_1.BookingModule,
         ],
         controllers: [],
         providers: [],
