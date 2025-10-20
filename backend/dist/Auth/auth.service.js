@@ -75,6 +75,24 @@ let AuthService = class AuthService {
             throw new common_1.HttpException('User is not registered', common_1.HttpStatus.CONFLICT);
         }
     }
+    async loginUser(bodyParam) {
+        try {
+            const user = await this.userService.findByEmail(bodyParam.email);
+            if (!user) {
+                throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
+            }
+            const isMatch = await bcrypt.compare(bodyParam.password, user.password);
+            if (!isMatch) {
+                throw new common_1.HttpException('Invalid credentials', common_1.HttpStatus.UNAUTHORIZED);
+            }
+            const token = await this.jwtService.signAsync({ id: user.id });
+            return { user, token };
+        }
+        catch (error) {
+            console.log('error in loginUser method', error);
+            throw new common_1.HttpException('Login failed', common_1.HttpStatus.UNAUTHORIZED);
+        }
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

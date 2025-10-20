@@ -6,12 +6,12 @@ import { Form, Button, Container } from "react-bootstrap";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { loginUser } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(email, password);
+    loginUser(email, password);
     navigate("/");
   };
 

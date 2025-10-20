@@ -1,15 +1,21 @@
 import { createContext, useContext, useState } from "react";
-import { register } from "../services/auth";
+import { register, login, logout } from "../services/auth";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (email, password) => {
-    const newUser = { email, name: email.split("@")[0] };
-    setUser(newUser);
-    localStorage.setItem("user", JSON.stringify(newUser));
+  const loginUser = async (email, password) => {
+    try {
+      const result = await login(email, password);
+      const userData = result.data;
+      setUser(userData);
+      console.log("Login successful:", userData);
+    } catch (error) {
+      console.log("Login error:", error);
+    }
   };
 
   const registerUser = async (data) => {
@@ -21,13 +27,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
+  const navigate = useNavigate();
+
+  const logoutUser = async () => {
+    try {
+      await logout();
+      setUser(null);
+      navigate("/");
+    } catch (error) {
+      console.log("Logout failed", error);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, registerUser, logout }}>
+    <AuthContext.Provider value={{ user, loginUser, registerUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

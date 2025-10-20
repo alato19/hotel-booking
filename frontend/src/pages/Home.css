@@ -53,3 +53,7 @@
   line-height: 1.2;
   letter-spacing: 1px;
 }
+
+.btn + .btn {
+  margin-left: 10px;
+}

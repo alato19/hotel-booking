@@ -9,7 +9,7 @@ import "../NavBar/NavBar.css";
 
 function NavBar() {
   const [scrolled, setScrolled] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logoutUser } = useAuth();
 
   useEffect(() => {
     const onScroll = () => {
@@ -35,33 +35,39 @@ function NavBar() {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="main-nav" />
         <Navbar.Collapse id="main-nav">
-          <Nav className="ms-auto">
+          <Nav className="ms-auto align-items-center">
             <Nav.Link as={NavLink} to="/" end>
               HOME
             </Nav.Link>
             <Nav.Link as={NavLink} to="/rooms">
               ROOMS
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/bookings">
-              BOOKINGS
+            <Nav.Link as={NavLink} to="/book">
+              BOOK
             </Nav.Link>
             <Nav.Link as={NavLink} to="/contact">
               CONTACT
             </Nav.Link>
             {user ? (
-              <Nav.Link onClick={logout}>LOGOUT</Nav.Link>
-            ) : (
               <>
-                <Nav.Link as={NavLink} to="/login">
-                  LOGIN
+                <Nav.Link disabled className="fw-semibold text-secondary">
+                  Welcome, {user.firstname || user.email}
                 </Nav.Link>
-
-                <Nav.Link as={NavLink} to="/register">
-                  REGISTER
+                <Nav.Link
+                  onClick={logoutUser}
+                  className="fw-bold text-danger"
+                  style={{ cursor: "pointer" }}
+                >
+                  LOGOUT
                 </Nav.Link>
               </>
+            ) : (
+              <Nav.Link as={NavLink} to="/login">
+                LOGIN
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

@@ -1,3 +1,3 @@
 export default function MyBookings() {
-  return <h1>My Bookings</h1>;
+  return <h1>Book your room here</h1>;
 }

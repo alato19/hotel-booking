@@ -43,6 +43,17 @@ export default function Home() {
 
   const filteredRooms = applyFilters(rooms);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const results = applyFilters(rooms);
+    setFilteredRooms(results);
+  };
+
+  const handleReset = () => {
+    setFilters({ arrival: "", departure: "", people: 1 });
+    setFilteredRooms(rooms);
+  };
+
   return (
     <div className="position-relative">
       <NavBar />
@@ -65,7 +76,7 @@ export default function Home() {
         <div className="container">
           <Form
             className="row g-0 justify-content-center shadow"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
             {/* Arrival Date */}
             <div className="col-md-3 p-3 bg-white border">
@@ -82,7 +93,7 @@ export default function Home() {
                   className="border-0 fs-4 fw-light text-center"
                 />
                 <span className="input-group-text bg-white border-0">
-                  <i className="fas text-muted"></i>
+                  <i className="fas fa-calendar-alt text-muted"></i>
                 </span>
               </div>
             </div>
@@ -102,7 +113,7 @@ export default function Home() {
                   className="border-0 fs-4 fw-light text-center"
                 />
                 <span className="input-group-text bg-white border-0">
-                  <i className="fas text-muted"></i>
+                  <i className="fas fa-calendar-check text-muted"></i>
                 </span>
               </div>
             </div>
@@ -128,14 +139,30 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Submit button */}
-            <div className="col-md-2 p-3 bg-primary d-flex align-items-center justify-content-center">
+            {/* Check Availability */}
+            <div className="col-md-2 p-3 d-flex align-items-center justify-content-center">
               <Button
                 type="submit"
-                className="w-100 h-100 fw-bold text-uppercase"
+                className="w-100 fw-bold text-uppercase"
                 style={{ backgroundColor: "#8b6f47", border: "none" }}
               >
                 Check Availability
+              </Button>
+            </div>
+
+            {/* Reset */}
+            <div className="col-md-2 p-3 d-flex align-items-center justify-content-center">
+              <Button
+                type="button"
+                onClick={handleReset}
+                className="w-100 fw-bold text-uppercase"
+                style={{
+                  backgroundColor: "#ccc",
+                  border: "none",
+                  color: "#333",
+                }}
+              >
+                Reset
               </Button>
             </div>
           </Form>
