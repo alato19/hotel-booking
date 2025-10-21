@@ -61,12 +61,12 @@ __decorate([
     __metadata("design:type", Boolean)
 ], RoomEntity.prototype, "tvService", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date', nullable: true }),
-    __metadata("design:type", Date)
+    (0, typeorm_1.Column)({ type: 'date', nullable: true, name: 'available_from' }),
+    __metadata("design:type", String)
 ], RoomEntity.prototype, "availableFrom", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date', nullable: true }),
-    __metadata("design:type", Date)
+    (0, typeorm_1.Column)({ type: 'date', nullable: true, name: 'available_to' }),
+    __metadata("design:type", String)
 ], RoomEntity.prototype, "availableTo", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: false }),

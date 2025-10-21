@@ -18,8 +18,8 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @Column()
-  roles: string;
+  @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })
+  role: 'user' | 'admin';
 
   @OneToMany(() => BookingEntity, (booking) => booking.user)
   bookings: BookingEntity[];

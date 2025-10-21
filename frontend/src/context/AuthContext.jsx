@@ -13,8 +13,10 @@ export const AuthProvider = ({ children }) => {
       const userData = result.data;
       setUser(userData);
       console.log("Login successful:", userData);
+      return userData;
     } catch (error) {
       console.log("Login error:", error);
+      throw error;
     }
   };
 

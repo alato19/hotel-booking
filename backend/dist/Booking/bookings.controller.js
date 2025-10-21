@@ -23,6 +23,9 @@ let BookingController = class BookingController {
     async createBooking(body) {
         return await this.bookingService.createBooking(body.userId, body.roomId);
     }
+    catch(error) {
+        throw new common_1.HttpException('Booking failed', common_1.HttpStatus.BAD_REQUEST);
+    }
     async getAllBookings() {
         return await this.bookingService.getAll();
     }

@@ -27,11 +27,11 @@ export class RoomEntity {
   @Column()
   tvService: boolean;
 
-  @Column({ type: 'date', nullable: true })
-  availableFrom: Date;
+  @Column({ type: 'date', nullable: true, name: 'available_from' })
+  availableFrom: string;
 
-  @Column({ type: 'date', nullable: true })
-  availableTo: Date;
+  @Column({ type: 'date', nullable: true, name: 'available_to' })
+  availableTo: string;
 
   @Column({ default: false })
   isBooked: boolean;

@@ -8,8 +8,8 @@ export declare class RoomEntity {
     hasBalcony: boolean;
     oceanView: boolean;
     tvService: boolean;
-    availableFrom: Date;
-    availableTo: Date;
+    availableFrom: string;
+    availableTo: string;
     isBooked: boolean;
     isPublished: boolean;
     bookings: BookingEntity[];

@@ -20,6 +20,8 @@ class RoomDto {
     oceanView;
     tvService;
     isPublished;
+    availableFrom;
+    availableTo;
 }
 exports.RoomDto = RoomDto;
 __decorate([
@@ -62,4 +64,14 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Boolean)
 ], RoomDto.prototype, "isPublished", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], RoomDto.prototype, "availableFrom", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], RoomDto.prototype, "availableTo", void 0);
 //# sourceMappingURL=Room.dto.js.map

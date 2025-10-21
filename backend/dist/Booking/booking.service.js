@@ -31,10 +31,17 @@ let BookingService = class BookingService {
     async createBooking(userId, roomId) {
         const user = await this.userRepo.findOneBy({ id: userId });
         const room = await this.roomRepo.findOneBy({ id: roomId });
-        if (!user || !room)
-            throw new common_1.HttpException('User or Room not found', common_1.HttpStatus.NOT_FOUND);
+        if (!user || !room) {
+            throw new common_1.NotFoundException('User or Room not found');
+        }
+        if (room.isBooked) {
+            throw new common_1.NotFoundException('Room already booked');
+        }
         const booking = this.bookingRepo.create({ user, room, confirmed: true });
-        return await this.bookingRepo.save(booking);
+        await this.bookingRepo.save(booking);
+        room.isBooked = true;
+        await this.roomRepo.save(room);
+        return { message: 'Booking successful', booking };
     }
     async getAll() {
         return this.bookingRepo.find();

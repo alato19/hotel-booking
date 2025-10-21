@@ -32,8 +32,9 @@ const handleBooking = async () => {
       roomId: room.id,
     });
     alert(`Booking successful! ID: ${res.data.id}`);
+    console.log("Booking result:", res.data);
   } catch (error) {
-    console.error("Booking error:", error);
+    console.error("Booking error:", error.response?.data || error.message);
     alert("Booking failed, please try again.");
   }
 };
@@ -47,12 +48,24 @@ export default function RoomDetail() {
 
   if (!room) return <p className="text-center mt-5">Room not found</p>;
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (!user) {
       navigate("/login");
       return;
     }
-    alert(`Booking confirmed for ${room.title}!`);
+
+    try {
+      const res = await axios.post(`http://localhost:3000/booking`, {
+        userId: user.id,
+        roomId: room.id,
+      });
+
+      alert(`Booking confirmed for ${room.title}!`);
+      console.log("Booking result:", res.data);
+    } catch (error) {
+      console.error("Booking error:", error.response?.data || error.message);
+      alert("Booking failed. Please try again.");
+    }
   };
 
   return (

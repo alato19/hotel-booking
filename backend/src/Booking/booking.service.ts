@@ -1,4 +1,9 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BookingEntity } from './Entity/Booking.entity';
@@ -19,11 +24,22 @@ export class BookingService {
   async createBooking(userId: number, roomId: number) {
     const user = await this.userRepo.findOneBy({ id: userId });
     const room = await this.roomRepo.findOneBy({ id: roomId });
-    if (!user || !room)
-      throw new HttpException('User or Room not found', HttpStatus.NOT_FOUND);
+
+    if (!user || !room) {
+      throw new NotFoundException('User or Room not found');
+    }
+
+    if (room.isBooked) {
+      throw new NotFoundException('Room already booked');
+    }
 
     const booking = this.bookingRepo.create({ user, room, confirmed: true });
-    return await this.bookingRepo.save(booking);
+    await this.bookingRepo.save(booking);
+
+    room.isBooked = true;
+    await this.roomRepo.save(room);
+
+    return { message: 'Booking successful', booking };
   }
 
   async getAll() {

@@ -5,6 +5,10 @@ export declare class BookingController {
     createBooking(body: {
         userId: number;
         roomId: number;
-    }): Promise<import("./Entity/Booking.entity").BookingEntity>;
+    }): Promise<{
+        message: string;
+        booking: import("./Entity/Booking.entity").BookingEntity;
+    }>;
+    catch(error: any): void;
     getAllBookings(): Promise<import("./Entity/Booking.entity").BookingEntity[]>;
 }

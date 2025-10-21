@@ -9,10 +9,18 @@ export default function Login() {
   const { loginUser } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    loginUser(email, password);
-    navigate("/");
+    try {
+      const result = await loginUser(email, password);
+      if (result?.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      alert("Invalid credentials");
+    }
   };
 
   return (

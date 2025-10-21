@@ -7,6 +7,9 @@ export declare class BookingService {
     private userRepo;
     private roomRepo;
     constructor(bookingRepo: Repository<BookingEntity>, userRepo: Repository<UserEntity>, roomRepo: Repository<RoomEntity>);
-    createBooking(userId: number, roomId: number): Promise<BookingEntity>;
+    createBooking(userId: number, roomId: number): Promise<{
+        message: string;
+        booking: BookingEntity;
+    }>;
     getAll(): Promise<BookingEntity[]>;
 }

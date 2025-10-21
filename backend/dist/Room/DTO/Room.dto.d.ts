@@ -7,4 +7,6 @@ export declare class RoomDto {
     oceanView: boolean;
     tvService: boolean;
     isPublished: boolean;
+    availableFrom?: string;
+    availableTo?: string;
 }

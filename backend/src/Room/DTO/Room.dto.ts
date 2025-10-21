@@ -1,4 +1,11 @@
-import { IsString, IsNotEmpty, IsDateString, IsBoolean, IsNumber } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsDateString,
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 
 export class RoomDto {
   @IsString()
@@ -15,7 +22,7 @@ export class RoomDto {
 
   @IsNumber()
   @IsNotEmpty()
-  maxPeople:number;
+  maxPeople: number;
 
   @IsBoolean()
   @IsNotEmpty()
@@ -32,5 +39,13 @@ export class RoomDto {
   @IsBoolean()
   @IsNotEmpty()
   isPublished: boolean;
-  
+
+  // added on 21/10/2025
+  @IsOptional()
+  @IsDateString()
+  availableFrom?: string;
+
+  @IsOptional()
+  @IsDateString()
+  availableTo?: string;
 }

@@ -18,7 +18,7 @@ let UserEntity = class UserEntity {
     lastname;
     email;
     password;
-    roles;
+    role;
     bookings;
 };
 exports.UserEntity = UserEntity;
@@ -43,9 +43,9 @@ __decorate([
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['user', 'admin'], default: 'user' }),
     __metadata("design:type", String)
-], UserEntity.prototype, "roles", void 0);
+], UserEntity.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => Booking_entity_1.BookingEntity, (booking) => booking.user),
     __metadata("design:type", Array)

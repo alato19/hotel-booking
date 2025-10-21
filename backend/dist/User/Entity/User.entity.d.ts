@@ -5,6 +5,6 @@ export declare class UserEntity {
     lastname: string;
     email: string;
     password: string;
-    roles: string;
+    role: 'user' | 'admin';
     bookings: BookingEntity[];
 }

@@ -1,3 +1,5 @@
+import { useAuth } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -11,6 +13,7 @@ import { useRoomContext } from "../context/RoomContext";
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function AdminDashboard() {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const { rooms, refreshRooms } = useRoomContext();
   const [err, setErr] = useState("");
@@ -86,6 +89,9 @@ export default function AdminDashboard() {
   }
 
   if (loading) return <p className="text-center mt-5">Loading...</p>;
+  if (!user || user.role !== "admin") {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="position-relative">
