@@ -10,6 +10,11 @@ import Register from "./pages/Register";
 import Book from "./pages/Book";
 import Contact from "./pages/Contact.jsx";
 import AdminDashboard from "./pages/AdminDashboard";
+import Dashboard from "./pages/UserDashboard.jsx";
+import Profile from "./components/User/Profile.jsx";
+import MyBookings from "./components/User/MyBookings.jsx";
+import Support from "./components/User/Support.jsx";
+
 axios.defaults.withCredentials = true;
 export default function App() {
   return (
@@ -23,6 +28,11 @@ export default function App() {
             <Route path="/book" element={<Book />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route index element={<Profile />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="bookings" element={<MyBookings />} />
+            <Route path="support" element={<Support />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
