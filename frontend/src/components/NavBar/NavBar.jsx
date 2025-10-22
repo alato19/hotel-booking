@@ -45,16 +45,21 @@ function NavBar() {
             <Nav.Link as={NavLink} to="/rooms">
               ROOMS
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/book">
-              BOOK
-            </Nav.Link>
             <Nav.Link as={NavLink} to="/contact">
               CONTACT
             </Nav.Link>
             {user ? (
               <>
-                <Nav.Link disabled className="fw-semibold text-secondary">
-                  Welcome, {user.firstname || user.email}
+                <Nav.Link
+                  as={NavLink}
+                  to="/dashboard"
+                  className="fw-semibold text-primary"
+                  style={{ cursor: "pointer" }}
+                >
+                  Welcome,{" "}
+                  <span className="fw-bold">
+                    {user.firstname || user.email}
+                  </span>
                 </Nav.Link>
                 <Nav.Link
                   onClick={logoutUser}

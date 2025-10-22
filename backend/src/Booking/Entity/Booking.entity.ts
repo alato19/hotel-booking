@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   CreateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '../../User/Entity/User.entity';
 import { RoomEntity } from 'src/Room/Entity/Room.entity';
@@ -14,9 +15,11 @@ export class BookingEntity {
   id: number;
 
   @ManyToOne(() => UserEntity, (user) => user.bookings, { eager: true })
+  @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
   @ManyToOne(() => RoomEntity, (room) => room.bookings, { eager: true })
+  @JoinColumn({ name: 'roomId' })
   room: RoomEntity;
 
   @CreateDateColumn()

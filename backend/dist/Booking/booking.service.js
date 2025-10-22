@@ -46,6 +46,18 @@ let BookingService = class BookingService {
     async getAll() {
         return this.bookingRepo.find();
     }
+    async getUserBook(userId) {
+        try {
+            const result = await this.bookingRepo.find({
+                where: { user: { id: userId } },
+                relations: ['user', 'room'],
+            });
+            return result;
+        }
+        catch (error) {
+            throw new common_1.NotFoundException('User or Room not found');
+        }
+    }
 };
 exports.BookingService = BookingService;
 exports.BookingService = BookingService = __decorate([

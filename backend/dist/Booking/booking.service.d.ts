@@ -12,4 +12,5 @@ export declare class BookingService {
         booking: BookingEntity;
     }>;
     getAll(): Promise<BookingEntity[]>;
+    getUserBook(userId: number): Promise<any>;
 }

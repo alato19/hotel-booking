@@ -48,7 +48,7 @@ let AuthController = class AuthController {
             throw new common_1.HttpException('Invalid credentials', common_1.HttpStatus.UNAUTHORIZED);
         }
     }
-    async logout(response) {
+    logout(response) {
         try {
             response.clearCookie('jwt');
             return { message: 'Logout successful' };
@@ -81,7 +81,7 @@ __decorate([
     __param(0, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], AuthController.prototype, "logout", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),

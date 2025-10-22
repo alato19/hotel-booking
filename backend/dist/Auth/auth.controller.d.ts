@@ -8,7 +8,7 @@ export declare class AuthController {
     constructor(authService: AuthService);
     register(bodyParam: RegisterDto, response: express.Response): Promise<UserEntity>;
     login(bodyParam: LoginDto, response: express.Response): Promise<UserEntity>;
-    logout(response: express.Response): Promise<{
+    logout(response: express.Response): {
         message: string;
-    }>;
+    };
 }

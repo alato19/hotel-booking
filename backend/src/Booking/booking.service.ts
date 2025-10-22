@@ -45,4 +45,16 @@ export class BookingService {
   async getAll() {
     return this.bookingRepo.find();
   }
+
+  public async getUserBook(userId: number): Promise<any> {
+    try {
+      const result = await this.bookingRepo.find({
+        where: { user: { id: userId } },
+        relations: ['user', 'room'],
+      });
+      return result;
+    } catch (error) {
+      throw new NotFoundException('User or Room not found');
+    }
+  }
 }

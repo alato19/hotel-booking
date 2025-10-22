@@ -47,7 +47,7 @@ export class AuthController {
   }
 
   @Post('logout')
-  public async logout(@Res({ passthrough: true }) response: express.Response) {
+  public logout(@Res({ passthrough: true }) response: express.Response) {
     try {
       response.clearCookie('jwt');
       return { message: 'Logout successful' };

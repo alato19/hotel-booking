@@ -29,7 +29,6 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route index element={<Profile />} />
             <Route path="profile" element={<Profile />} />
             <Route path="bookings" element={<MyBookings />} />
             <Route path="support" element={<Support />} />

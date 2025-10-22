@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingController = void 0;
 const common_1 = require("@nestjs/common");
 const booking_service_1 = require("./booking.service");
+ss;
 let BookingController = class BookingController {
     bookingService;
     constructor(bookingService) {
@@ -29,6 +30,9 @@ let BookingController = class BookingController {
     async getAllBookings() {
         return await this.bookingService.getAll();
     }
+    async getUserBookings(id) {
+        return await this.bookingService.getUserBook(id);
+    }
 };
 exports.BookingController = BookingController;
 __decorate([
@@ -39,11 +43,18 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BookingController.prototype, "createBooking", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('all'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BookingController.prototype, "getAllBookings", null);
+__decorate([
+    (0, common_1.Get)('by-user/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookingController.prototype, "getUserBookings", null);
 exports.BookingController = BookingController = __decorate([
     (0, common_1.Controller)('booking'),
     __metadata("design:paramtypes", [booking_service_1.BookingService])

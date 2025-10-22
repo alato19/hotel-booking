@@ -27,10 +27,12 @@ __decorate([
 ], BookingEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => User_entity_1.UserEntity, (user) => user.bookings, { eager: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'userId' }),
     __metadata("design:type", User_entity_1.UserEntity)
 ], BookingEntity.prototype, "user", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => Room_entity_1.RoomEntity, (room) => room.bookings, { eager: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'roomId' }),
     __metadata("design:type", Room_entity_1.RoomEntity)
 ], BookingEntity.prototype, "room", void 0);
 __decorate([

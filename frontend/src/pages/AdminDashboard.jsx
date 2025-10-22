@@ -107,8 +107,9 @@ export default function AdminDashboard() {
           width: "100%",
         }}
       >
-        <div className="container header">
-          <h1 className="display-3 fw-bold">Admin Dashboard - Manage Rooms</h1>
+        <div className="container header text-center">
+          <h1 className="display-3 fw-bold">Admin Dashboard</h1>
+          <p className="lead text-white">Manage rooms and more</p>
         </div>
       </section>
 
