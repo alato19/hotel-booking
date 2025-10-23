@@ -1,35 +1,39 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  useCallback,
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import { get_bookings_services } from "../services/bookings";
+import { useAuth } from "../context/AuthContext";
 
 const BookingsContext = createContext({});
 
 const BookingsProvider = (props) => {
   const [bookings, setBookings] = useState([]);
+  const { user } = useAuth();
 
-  useEffect(() => {
-    refreshBookings();
-  }, []);
-
-  const refreshBookings = async () => {
+  const refreshBookings = useCallback(async () => {
+    if (!user?.id) return;
     try {
-      const result = await get_bookings_services();
+      const result = await get_bookings_services(user.id);
       setBookings(result);
     } catch (error) {
       console.error("Error refreshing bookings:", error);
     }
-  };
+  }, [user]);
 
-  const values = {
-    bookings,
-    refreshBookings,
-  };
+  useEffect(() => {
+    refreshBookings();
+  }, [refreshBookings]);
+
   return (
-    <BookingsContext.Provider value={values}>
+    <BookingsContext.Provider value={{ bookings, refreshBookings }}>
       {props.children}
     </BookingsContext.Provider>
   );
 };
 
-const useBookingsContext = () => useContext(BookingsContext);
-
-export { BookingsProvider, useBookingsContext };
+export const useBookingsContext = () => useContext(BookingsContext);
+export { BookingsProvider };

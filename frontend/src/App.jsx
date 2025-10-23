@@ -1,6 +1,7 @@
 import axios from "axios";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { RoomProvider } from "./context/RoomContext.jsx";
+import { BookingsProvider } from "./context/BookingContext.jsx";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Rooms from "./pages/Rooms-A.jsx";
@@ -20,22 +21,24 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <RoomProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/rooms" element={<Rooms />} />
-            <Route path="/rooms/:id" element={<RoomDetail />} />
-            <Route path="/book" element={<Book />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="bookings" element={<MyBookings />} />
-            <Route path="support" element={<Support />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </RoomProvider>
+        <BookingsProvider>
+          <RoomProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/rooms" element={<Rooms />} />
+              <Route path="/rooms/:id" element={<RoomDetail />} />
+              <Route path="/book" element={<Book />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="bookings" element={<MyBookings />} />
+              <Route path="support" element={<Support />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </RoomProvider>
+        </BookingsProvider>
       </AuthProvider>
     </BrowserRouter>
   );

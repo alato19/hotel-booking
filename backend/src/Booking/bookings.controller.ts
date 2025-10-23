@@ -8,9 +8,8 @@ import {
   Param,
 } from '@nestjs/common';
 import { BookingService } from './booking.service';
-ss;
 
-@Controller('booking')
+@Controller('bookings')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 

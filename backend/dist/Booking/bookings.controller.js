@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingController = void 0;
 const common_1 = require("@nestjs/common");
 const booking_service_1 = require("./booking.service");
-ss;
 let BookingController = class BookingController {
     bookingService;
     constructor(bookingService) {
@@ -56,7 +55,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BookingController.prototype, "getUserBookings", null);
 exports.BookingController = BookingController = __decorate([
-    (0, common_1.Controller)('booking'),
+    (0, common_1.Controller)('bookings'),
     __metadata("design:paramtypes", [booking_service_1.BookingService])
 ], BookingController);
 //# sourceMappingURL=bookings.controller.js.map
