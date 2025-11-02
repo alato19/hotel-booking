@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRoomContext } from "../context/RoomContext";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
@@ -130,18 +131,24 @@ export default function RoomDetail() {
               </li>
             </ul>
 
-            <button
-              onClick={handleBooking}
-              className="btn btn-lg w-100 fw-bold"
-              style={{ backgroundColor: "#8b6f47", color: "white" }}
-              disabled={!user || room.isBooked}
-            >
-              {!user
-                ? "Login to Book"
-                : room.isBooked
-                ? "Currently Unavailable"
-                : "Book Now"}
-            </button>
+            {!user ? (
+              <Link
+                to="/login"
+                className="btn btn-lg w-100 fw-bold"
+                style={{ backgroundColor: "#8b6f47", color: "white" }}
+              >
+                Login to Book
+              </Link>
+            ) : (
+              <button
+                onClick={handleBooking}
+                className="btn btn-lg w-100 fw-bold"
+                style={{ backgroundColor: "#8b6f47", color: "white" }}
+                disabled={room.isBooked}
+              >
+                {room.isBooked ? "Currently Unavailable" : "Book Now"}
+              </button>
+            )}
           </div>
         </div>
       </div>
