@@ -27,7 +27,8 @@ export class BookingController {
   }
 
   @Get('by-user/:id')
-  public async getUserBookings(@Param('id') id: number): Promise<any> {
-    return await this.bookingService.getUserBook(id);
+  public async getUserBook(@Param('id') id: number): Promise<any> {
+    const userId = Number(id);
+    return await this.bookingService.getUserBook(userId);
   }
 }

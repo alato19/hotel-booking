@@ -29,8 +29,9 @@ let BookingController = class BookingController {
     async getAllBookings() {
         return await this.bookingService.getAll();
     }
-    async getUserBookings(id) {
-        return await this.bookingService.getUserBook(id);
+    async getUserBook(id) {
+        const userId = Number(id);
+        return await this.bookingService.getUserBook(userId);
     }
 };
 exports.BookingController = BookingController;
@@ -53,7 +54,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], BookingController.prototype, "getUserBookings", null);
+], BookingController.prototype, "getUserBook", null);
 exports.BookingController = BookingController = __decorate([
     (0, common_1.Controller)('bookings'),
     __metadata("design:paramtypes", [booking_service_1.BookingService])

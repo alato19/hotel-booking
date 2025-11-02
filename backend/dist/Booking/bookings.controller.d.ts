@@ -11,5 +11,5 @@ export declare class BookingController {
     }>;
     catch(error: any): void;
     getAllBookings(): Promise<import("./Entity/Booking.entity").BookingEntity[]>;
-    getUserBookings(id: number): Promise<any>;
+    getUserBook(id: number): Promise<any>;
 }

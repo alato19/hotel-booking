@@ -57,7 +57,7 @@ export default function RoomDetail() {
     }
 
     try {
-      const res = await axios.post(`http://localhost:3000/booking`, {
+      const res = await axios.post(`http://localhost:3000/bookings`, {
         userId: user.id,
         roomId: room.id,
       });
