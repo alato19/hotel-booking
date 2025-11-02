@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Form, Button, Container } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
@@ -11,13 +12,18 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { loginUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const result = await loginUser(email, password);
+
       if (result?.role === "admin") {
         navigate("/admin");
+      } else if (from !== "/") {
+        navigate(from, { replace: true });
       } else {
         navigate("/dashboard");
       }

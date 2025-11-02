@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRoomContext } from "../context/RoomContext";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
@@ -46,6 +46,7 @@ export default function RoomDetail() {
   const { user } = useAuth();
   const { rooms } = useRoomContext();
   const room = rooms.find((room) => room?.id === parseInt(id));
+  const location = useLocation();
 
   if (!room) return <p className="text-center mt-5">Room not found</p>;
 
@@ -134,6 +135,7 @@ export default function RoomDetail() {
             {!user ? (
               <Link
                 to="/login"
+                state={{ from: location.pathname }}
                 className="btn btn-lg w-100 fw-bold"
                 style={{ backgroundColor: "#8b6f47", color: "white" }}
               >
