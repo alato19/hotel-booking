@@ -103,7 +103,7 @@ export default function AdminDashboard() {
           backgroundImage: `url(${optHeaderBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "60vh",
+          height: "50vh",
           width: "100%",
         }}
       >
