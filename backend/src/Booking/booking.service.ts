@@ -1,60 +1,67 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BookingEntity } from './Entity/Booking.entity';
-import { UserEntity } from 'src/User/Entity/User.entity';
 import { RoomEntity } from 'src/Room/Entity/Room.entity';
+import { CreateBookingDto } from './DTO/create-booking.dto';
 
 @Injectable()
 export class BookingService {
   constructor(
     @InjectRepository(BookingEntity)
-    private bookingRepo: Repository<BookingEntity>,
-    @InjectRepository(UserEntity)
-    private userRepo: Repository<UserEntity>,
+    private readonly bookingRepository: Repository<BookingEntity>,
     @InjectRepository(RoomEntity)
-    private roomRepo: Repository<RoomEntity>,
+    private readonly roomRepository: Repository<RoomEntity>,
   ) {}
 
-  async createBooking(userId: number, roomId: number) {
-    const user = await this.userRepo.findOneBy({ id: userId });
-    const room = await this.roomRepo.findOneBy({ id: roomId });
+  async createBooking(body: CreateBookingDto) {
+    const { userId, roomId } = body;
 
-    if (!user || !room) {
-      throw new NotFoundException('User or Room not found');
-    }
+    const room = await this.roomRepository.findOne({ where: { id: roomId } });
+    if (!room) throw new HttpException('Room not found', HttpStatus.NOT_FOUND);
+    if (room.isBooked)
+      throw new HttpException('Room already booked', HttpStatus.CONFLICT);
 
-    if (room.isBooked) {
-      throw new NotFoundException('Room already booked');
-    }
+    const booking = this.bookingRepository.create({
+      user: { id: userId },
+      room: { id: roomId },
+      confirmed: true,
+    });
 
-    const booking = this.bookingRepo.create({ user, room, confirmed: true });
-    await this.bookingRepo.save(booking);
-
+    await this.bookingRepository.save(booking);
     room.isBooked = true;
-    await this.roomRepo.save(room);
+    await this.roomRepository.save(room);
 
-    return { message: 'Booking successful', booking };
+    return booking;
   }
 
-  async getAll() {
-    return this.bookingRepo.find();
+  async getBookingsByUser(userId: number) {
+    return this.bookingRepository.find({
+      where: { user: { id: userId } },
+      relations: ['room'],
+      order: { createdAt: 'DESC' },
+    });
   }
 
-  public async getUserBook(userId: number): Promise<any> {
-    try {
-      const result = await this.bookingRepo.find({
-        where: { user: { id: userId } },
-        relations: ['user', 'room'],
-      });
-      return result;
-    } catch (error) {
-      throw new NotFoundException('User or Room not found');
+  // 🆕 Delete booking and mark room as available again
+  async deleteBooking(id: number) {
+    const booking = await this.bookingRepository.findOne({
+      where: { id },
+      relations: ['room'],
+    });
+
+    if (!booking) {
+      throw new HttpException('Booking not found', HttpStatus.NOT_FOUND);
     }
+
+    // Mark room as available again
+    if (booking.room) {
+      booking.room.isBooked = false;
+      await this.roomRepository.save(booking.room);
+    }
+
+    await this.bookingRepository.remove(booking);
+
+    return { message: 'Booking cancelled successfully', bookingId: id };
   }
 }

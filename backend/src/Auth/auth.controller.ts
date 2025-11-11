@@ -29,12 +29,8 @@ export class AuthController {
     @Body() bodyParam: RegisterDto,
     @Res({ passthrough: true }) response: Response,
   ): Promise<UserEntity> {
-    // Register user and get token
     const { user, token } = await this.authService.registerUser(bodyParam);
-
-    // Store token in cookie
     response.cookie('jwt', token, { httpOnly: true });
-
     return user;
   }
 
@@ -43,25 +39,21 @@ export class AuthController {
     @Body() bodyParam: LoginDto,
     @Res({ passthrough: true }) response: Response,
   ): Promise<UserEntity> {
-    // Login user and get token
     const { user, token } = await this.authService.loginUser(bodyParam);
-
-    // Store token in cookie
     response.cookie('jwt', token, { httpOnly: true });
-
     return user;
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   public logout(@Res({ passthrough: true }) response: Response) {
-    // Delete the JWT cookie
     response.clearCookie('jwt');
     return { message: 'Logged out successfully' };
   }
 
+  // ✅ Fixed checkUser endpoint
   @UseGuards(JwtAuthGuard)
-  @Get('check')
+  @Get('checkUser')
   public async checkAuth(@Req() req: Request): Promise<UserEntity> {
     if (!req.user) {
       throw new HttpException(
@@ -70,7 +62,17 @@ export class AuthController {
       );
     }
 
-    const user = await this.userService.findById(req.user);
+    // ✅ req.user likely contains { id: number } from JwtStrategy
+    const userId =
+      typeof req.user === 'object' && 'id' in req.user
+        ? req.user['id']
+        : req.user;
+
+    const user = await this.userService.findById(userId);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
     return user;
   }
 }

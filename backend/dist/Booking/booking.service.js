@@ -17,56 +17,60 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const Booking_entity_1 = require("./Entity/Booking.entity");
-const User_entity_1 = require("../User/Entity/User.entity");
 const Room_entity_1 = require("../Room/Entity/Room.entity");
 let BookingService = class BookingService {
-    bookingRepo;
-    userRepo;
-    roomRepo;
-    constructor(bookingRepo, userRepo, roomRepo) {
-        this.bookingRepo = bookingRepo;
-        this.userRepo = userRepo;
-        this.roomRepo = roomRepo;
+    bookingRepository;
+    roomRepository;
+    constructor(bookingRepository, roomRepository) {
+        this.bookingRepository = bookingRepository;
+        this.roomRepository = roomRepository;
     }
-    async createBooking(userId, roomId) {
-        const user = await this.userRepo.findOneBy({ id: userId });
-        const room = await this.roomRepo.findOneBy({ id: roomId });
-        if (!user || !room) {
-            throw new common_1.NotFoundException('User or Room not found');
-        }
-        if (room.isBooked) {
-            throw new common_1.NotFoundException('Room already booked');
-        }
-        const booking = this.bookingRepo.create({ user, room, confirmed: true });
-        await this.bookingRepo.save(booking);
+    async createBooking(body) {
+        const { userId, roomId } = body;
+        const room = await this.roomRepository.findOne({ where: { id: roomId } });
+        if (!room)
+            throw new common_1.HttpException('Room not found', common_1.HttpStatus.NOT_FOUND);
+        if (room.isBooked)
+            throw new common_1.HttpException('Room already booked', common_1.HttpStatus.CONFLICT);
+        const booking = this.bookingRepository.create({
+            user: { id: userId },
+            room: { id: roomId },
+            confirmed: true,
+        });
+        await this.bookingRepository.save(booking);
         room.isBooked = true;
-        await this.roomRepo.save(room);
-        return { message: 'Booking successful', booking };
+        await this.roomRepository.save(room);
+        return booking;
     }
-    async getAll() {
-        return this.bookingRepo.find();
+    async getBookingsByUser(userId) {
+        return this.bookingRepository.find({
+            where: { user: { id: userId } },
+            relations: ['room'],
+            order: { createdAt: 'DESC' },
+        });
     }
-    async getUserBook(userId) {
-        try {
-            const result = await this.bookingRepo.find({
-                where: { user: { id: userId } },
-                relations: ['user', 'room'],
-            });
-            return result;
+    async deleteBooking(id) {
+        const booking = await this.bookingRepository.findOne({
+            where: { id },
+            relations: ['room'],
+        });
+        if (!booking) {
+            throw new common_1.HttpException('Booking not found', common_1.HttpStatus.NOT_FOUND);
         }
-        catch (error) {
-            throw new common_1.NotFoundException('User or Room not found');
+        if (booking.room) {
+            booking.room.isBooked = false;
+            await this.roomRepository.save(booking.room);
         }
+        await this.bookingRepository.remove(booking);
+        return { message: 'Booking cancelled successfully', bookingId: id };
     }
 };
 exports.BookingService = BookingService;
 exports.BookingService = BookingService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(Booking_entity_1.BookingEntity)),
-    __param(1, (0, typeorm_1.InjectRepository)(User_entity_1.UserEntity)),
-    __param(2, (0, typeorm_1.InjectRepository)(Room_entity_1.RoomEntity)),
+    __param(1, (0, typeorm_1.InjectRepository)(Room_entity_1.RoomEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
         typeorm_2.Repository])
 ], BookingService);
 //# sourceMappingURL=booking.service.js.map

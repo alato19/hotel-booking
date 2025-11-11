@@ -63,4 +63,4 @@ exports.BookingController = BookingController = __decorate([
     (0, common_1.Controller)('bookings'),
     __metadata("design:paramtypes", [booking_service_1.BookingService])
 ], BookingController);
-//# sourceMappingURL=bookings.controller.js.map
+//# sourceMappingURL=booking.controller.js.map

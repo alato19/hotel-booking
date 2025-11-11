@@ -44,7 +44,13 @@ let AuthController = class AuthController {
         if (!req.user) {
             throw new common_1.HttpException('User not authenticated', common_1.HttpStatus.UNAUTHORIZED);
         }
-        const user = await this.userService.findById(req.user);
+        const userId = typeof req.user === 'object' && 'id' in req.user
+            ? req.user['id']
+            : req.user;
+        const user = await this.userService.findById(userId);
+        if (!user) {
+            throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
+        }
         return user;
     }
 };
@@ -75,7 +81,7 @@ __decorate([
 ], AuthController.prototype, "logout", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('check'),
+    (0, common_1.Get)('checkUser'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

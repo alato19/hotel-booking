@@ -10,7 +10,7 @@ exports.BookingModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const booking_service_1 = require("./booking.service");
-const bookings_controller_1 = require("./bookings.controller");
+const booking_controller_1 = require("./booking.controller");
 const User_entity_1 = require("../User/Entity/User.entity");
 const Room_entity_1 = require("../Room/Entity/Room.entity");
 const Booking_entity_1 = require("./Entity/Booking.entity");
@@ -21,7 +21,7 @@ exports.BookingModule = BookingModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([Booking_entity_1.BookingEntity, User_entity_1.UserEntity, Room_entity_1.RoomEntity])],
         providers: [booking_service_1.BookingService],
-        controllers: [bookings_controller_1.BookingController],
+        controllers: [booking_controller_1.BookingController],
     })
 ], BookingModule);
 //# sourceMappingURL=booking.module.js.map

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useRoomContext } from "../context/RoomContext";
 import { useAuthenticateContext } from "../context/AuthenticateContext";
+import { useBookingsContext } from "../context/BookingContext";
 
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
@@ -27,12 +28,12 @@ export default function RoomDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   const { authUser } = useAuthenticateContext();
+  const { refreshBookings } = useBookingsContext();
   const { rooms } = useRoomContext();
 
-  const room = rooms.find((r) => r?.id === parseInt(id));
+  const room = rooms.find((room) => room?.id === parseInt(id));
 
-  if (!room)
-    return <p className="text-center mt-5 fs-4 text-muted">Room not found.</p>;
+  if (!room) return <p className="text-center mt-5">Room not found</p>;
 
   const handleBooking = async () => {
     if (!authUser) {
@@ -41,18 +42,18 @@ export default function RoomDetail() {
     }
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL || "http://localhost:3000/"}bookings`,
-        {
-          userId: authUser.id,
-          roomId: room.id,
-        },
-        { withCredentials: true }
-      );
+      const res = await axios.post(`http://localhost:3000/bookings`, {
+        userId: authUser.id,
+        roomId: room.id,
+      });
 
       alert(`Booking confirmed for ${room.title}!`);
       console.log("Booking result:", res.data);
-      navigate("/dashboard");
+
+      // ✅ automatically refresh bookings
+      if (typeof refreshBookings === "function") {
+        refreshBookings();
+      }
     } catch (error) {
       console.error("Booking error:", error.response?.data || error.message);
       alert("Booking failed. Please try again.");
@@ -85,7 +86,6 @@ export default function RoomDetail() {
       {/* Room details */}
       <div className="container py-5">
         <div className="row">
-          {/* Left column: image */}
           <div className="col-lg-7 mb-4">
             <img
               src={roomImages[room.id] || room1}
@@ -94,7 +94,6 @@ export default function RoomDetail() {
             />
           </div>
 
-          {/* Right column: details */}
           <div className="col-lg-5">
             <h2 className="fw-bold mb-3">Room Information</h2>
             <p className="mb-4">{room.description}</p>

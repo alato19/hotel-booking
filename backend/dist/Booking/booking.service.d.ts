@@ -1,16 +1,15 @@
 import { Repository } from 'typeorm';
 import { BookingEntity } from './Entity/Booking.entity';
-import { UserEntity } from 'src/User/Entity/User.entity';
 import { RoomEntity } from 'src/Room/Entity/Room.entity';
+import { CreateBookingDto } from './DTO/create-booking.dto';
 export declare class BookingService {
-    private bookingRepo;
-    private userRepo;
-    private roomRepo;
-    constructor(bookingRepo: Repository<BookingEntity>, userRepo: Repository<UserEntity>, roomRepo: Repository<RoomEntity>);
-    createBooking(userId: number, roomId: number): Promise<{
+    private readonly bookingRepository;
+    private readonly roomRepository;
+    constructor(bookingRepository: Repository<BookingEntity>, roomRepository: Repository<RoomEntity>);
+    createBooking(body: CreateBookingDto): Promise<BookingEntity>;
+    getBookingsByUser(userId: number): Promise<BookingEntity[]>;
+    deleteBooking(id: number): Promise<{
         message: string;
-        booking: BookingEntity;
+        bookingId: number;
     }>;
-    getAll(): Promise<BookingEntity[]>;
-    getUserBook(userId: number): Promise<any>;
 }
