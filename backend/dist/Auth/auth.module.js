@@ -20,13 +20,14 @@ exports.AuthModule = AuthModule = __decorate([
         imports: [
             jwt_1.JwtModule.register({
                 global: true,
-                secret: 'my secret key',
+                secret: 'my-demo-secret-key',
                 signOptions: { expiresIn: '1h' },
             }),
             user_module_1.UserModule,
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService],
+        exports: [auth_service_1.AuthService],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../../assets/sky-logo-header.png";
-import { useAuth } from "../../context/AuthContext";
 import "../NavBar/NavBar.css";
+import { useAuthenticateContext } from "../../context/AuthenticateContext";
 
 function NavBar() {
   const [scrolled, setScrolled] = useState(false);
-  const { user, logoutUser } = useAuth();
+  const { authUser, logout } = useAuthenticateContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
-
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
 
   return (
     <Navbar
@@ -48,21 +51,21 @@ function NavBar() {
             <Nav.Link as={NavLink} to="/contact">
               CONTACT
             </Nav.Link>
-            {user ? (
+
+            {authUser ? (
               <>
                 <Nav.Link
                   as={NavLink}
-                  to="/dashboard"
+                  to={authUser.role === "admin" ? "/admin" : "/dashboard"}
                   className="fw-semibold text-primary"
-                  style={{ cursor: "pointer" }}
                 >
                   Welcome,{" "}
                   <span className="fw-bold">
-                    {user.firstname || user.email}
+                    {authUser.firstname || authUser.email}
                   </span>
                 </Nav.Link>
                 <Nav.Link
-                  onClick={logoutUser}
+                  onClick={handleLogout}
                   className="fw-bold text-danger"
                   style={{ cursor: "pointer" }}
                 >

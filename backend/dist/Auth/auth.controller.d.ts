@@ -2,13 +2,16 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './DTO/register.dto';
 import { LoginDto } from './DTO/login.dto';
 import { UserEntity } from 'src/User/Entity/User.entity';
-import express from 'express';
+import type { Response, Request } from 'express';
+import { UserService } from 'src/User/user.service';
 export declare class AuthController {
     private readonly authService;
-    constructor(authService: AuthService);
-    register(bodyParam: RegisterDto, response: express.Response): Promise<UserEntity>;
-    login(bodyParam: LoginDto, response: express.Response): Promise<UserEntity>;
-    logout(response: express.Response): {
+    private readonly userService;
+    constructor(authService: AuthService, userService: UserService);
+    register(bodyParam: RegisterDto, response: Response): Promise<UserEntity>;
+    login(bodyParam: LoginDto, response: Response): Promise<UserEntity>;
+    logout(response: Response): {
         message: string;
     };
+    checkAuth(req: Request): Promise<UserEntity>;
 }

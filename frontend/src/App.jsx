@@ -1,8 +1,13 @@
 import axios from "axios";
-import { AuthProvider } from "./context/AuthContext.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { AuthenticateProvider } from "./context/AuthenticateContext.jsx";
 import { RoomProvider } from "./context/RoomContext.jsx";
 import { BookingsProvider } from "./context/BookingContext.jsx";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import AdminRoute from "./components/AdminRoute/index.jsx";
+import AuthUserRoute from "./components/AuthUserRoute/index.jsx";
+
 import Home from "./pages/Home";
 import Rooms from "./pages/Rooms-A.jsx";
 import RoomDetail from "./pages/RoomDetail";
@@ -14,35 +19,71 @@ import Dashboard from "./pages/UserDashboard.jsx";
 import Profile from "./components/User/Profile.jsx";
 import MyBookings from "./components/User/MyBookings.jsx";
 import Support from "./components/User/Support.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 axios.defaults.withCredentials = true;
+
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
+      <AuthenticateProvider>
         <BookingsProvider>
           <RoomProvider>
             <Routes>
+              {/* Public routes */}
               <Route path="/" element={<Home />} />
               <Route path="/rooms" element={<Rooms />} />
               <Route path="/rooms/:id" element={<RoomDetail />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Route>
-              <Route element={<ProtectedRoute />}>
-                <Route path="/admin" element={<AdminDashboard />} />
-              </Route>
-              <Route path="profile" element={<Profile />} />
-              <Route path="bookings" element={<MyBookings />} />
-              <Route path="support" element={<Support />} />
+
+              {/* Protected user routes */}
+              <Route
+                path="/dashboard"
+                element={
+                  <AuthUserRoute>
+                    <Dashboard />
+                  </AuthUserRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <AuthUserRoute>
+                    <Profile />
+                  </AuthUserRoute>
+                }
+              />
+              <Route
+                path="/bookings"
+                element={
+                  <AuthUserRoute>
+                    <MyBookings />
+                  </AuthUserRoute>
+                }
+              />
+              <Route
+                path="/support"
+                element={
+                  <AuthUserRoute>
+                    <Support />
+                  </AuthUserRoute>
+                }
+              />
+
+              {/* Protected admin route */}
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              />
             </Routes>
           </RoomProvider>
         </BookingsProvider>
-      </AuthProvider>
+      </AuthenticateProvider>
     </BrowserRouter>
   );
 }

@@ -1,34 +1,99 @@
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { useState } from "react";
+import { useAuthenticateContext } from "../../context/AuthenticateContext";
 
 export default function Support() {
+  const { authUser } = useAuthenticateContext();
+  const [form, setForm] = useState({ subject: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
+    setLoading(true);
+
+    try {
+      // (Later: send to backend via API)
+      console.log("Support message:", { ...form, user: authUser?.email });
+      await new Promise((resolve) => setTimeout(resolve, 800)); // simulate delay
+      setSent(true);
+      setForm({ subject: "", message: "" });
+    } catch (error) {
+      console.error("Support form error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <>
+    <div style={{ maxWidth: "600px" }}>
       <h3 className="mb-4">Contact Support</h3>
+
       {sent && (
-        <Alert variant="success">Message sent! We'll get back soon.</Alert>
+        <Alert
+          variant="success"
+          onClose={() => setSent(false)}
+          dismissible
+          className="shadow-sm"
+        >
+          Message sent successfully! Our team will get back to you soon.
+        </Alert>
       )}
-      <Form onSubmit={handleSubmit} style={{ maxWidth: "500px" }}>
+
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Subject</Form.Label>
+          <Form.Control
+            type="text"
+            name="subject"
+            placeholder="Enter subject"
+            value={form.subject}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
         <Form.Group className="mb-3">
           <Form.Label>Your Message</Form.Label>
           <Form.Control
             as="textarea"
             rows={4}
+            name="message"
             placeholder="Type your message..."
+            value={form.message}
+            onChange={handleChange}
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Send
+
+        <Button
+          variant="secondary"
+          type="submit"
+          disabled={loading}
+          style={{ backgroundColor: "#8b6f47", border: "none" }}
+        >
+          {loading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                className="me-2"
+              />
+              Sending...
+            </>
+          ) : (
+            "Send Message"
+          )}
         </Button>
       </Form>
-    </>
+    </div>
   );
 }

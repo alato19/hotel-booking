@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { Form, Button, Container } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
+import { useAuthenticateContext } from "../context/AuthenticateContext";
+
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
@@ -10,25 +10,26 @@ import optHeaderBackground from "../assets/header.jpg";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loginUser } = useAuth();
+  const { login } = useAuthenticateContext();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await loginUser(email, password);
+      // ✅ Pass object { email, password } (matches AuthenticateContext)
+      const result = await login({ email, password });
 
+      // ✅ Redirect based on user role
       if (result?.role === "admin") {
         navigate("/admin");
-      } else if (from !== "/") {
-        navigate(from, { replace: true });
-      } else {
+      } else if (result?.role === "user") {
         navigate("/dashboard");
+      } else {
+        navigate("/");
       }
     } catch (error) {
-      alert("Invalid credentials");
+      console.error("Login error:", error);
+      alert("Invalid credentials or server error.");
     }
   };
 

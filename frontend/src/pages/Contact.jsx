@@ -1,4 +1,3 @@
-import React from "react";
 import NavBar from "../components/NavBar/NavBar";
 import optHeaderBackground from "../assets/header.jpg";
 import Footer from "../components/Footer/Footer";
@@ -12,8 +11,27 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { BsBuilding } from "react-icons/bs";
+import { useState } from "react";
 
 export default function Contact() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Message sent successfully! (Demo form — not connected to backend)");
+    setForm({ name: "", email: "", subject: "", message: "" });
+  };
+
   return (
     <>
       <div className="position-relative">
@@ -32,6 +50,7 @@ export default function Contact() {
         >
           <div className="container text-center">
             <h1 className="display-3 fw-bold">Contact Us</h1>
+            <p className="lead text-white">We’d love to hear from you!</p>
           </div>
         </section>
       </div>
@@ -46,28 +65,53 @@ export default function Contact() {
                   <p className="h4 fw-bold">Write to Us</p>
                 </div>
 
-                <Form>
+                <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3">
                     <Form.Label>Your Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your name" />
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      placeholder="Enter your name"
+                      value={form.name}
+                      onChange={handleChange}
+                      required
+                    />
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Your Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter your email" />
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      placeholder="Enter your email"
+                      value={form.email}
+                      onChange={handleChange}
+                      required
+                    />
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Subject</Form.Label>
-                    <Form.Control type="text" placeholder="Enter subject" />
+                    <Form.Control
+                      type="text"
+                      name="subject"
+                      placeholder="Enter subject"
+                      value={form.subject}
+                      onChange={handleChange}
+                      required
+                    />
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Your Message</Form.Label>
                     <Form.Control
                       as="textarea"
+                      name="message"
                       rows={4}
                       placeholder="Write your message"
+                      value={form.message}
+                      onChange={handleChange}
+                      required
                     />
                   </Form.Group>
 
@@ -120,7 +164,7 @@ export default function Contact() {
               </div>
 
               <div className="mt-4">
-                {/* Placeholder Map (you can embed Google Maps iframe later) */}
+                {/* Placeholder Map (embed Google Maps later) */}
                 <div
                   className="bg-light border rounded"
                   style={{ height: "250px" }}

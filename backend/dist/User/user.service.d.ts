@@ -6,4 +6,5 @@ export declare class UserService {
     constructor(usersRepository: Repository<UserEntity>);
     findByEmail(email: string): Promise<UserEntity | null>;
     registerUser(data: UserDto): Promise<UserEntity>;
+    findById(id: number): Promise<UserEntity>;
 }

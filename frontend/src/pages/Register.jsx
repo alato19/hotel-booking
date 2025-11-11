@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
+import { useAuthenticateContext } from "../context/AuthenticateContext";
+
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
 
 export default function Register() {
-  const { registerUser } = useAuth();
+  const { register } = useAuthenticateContext();
   const navigate = useNavigate();
+
   const [values, setValues] = useState({
     firstname: "",
     lastname: "",
@@ -16,20 +18,28 @@ export default function Register() {
     password: "",
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await registerUser(values);
-    navigate("/login");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setValues(() => {
-      return {
-        ...values,
-        [name]: value,
-      };
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await register(values);
+      if (result) {
+        alert("Account created successfully! You can now log in.");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert(
+        "Registration failed. Please check your information and try again."
+      );
+    }
   };
 
   return (
@@ -60,9 +70,9 @@ export default function Register() {
             <Form.Control
               type="text"
               placeholder="Enter firstname"
+              name="firstname"
               value={values.firstname}
               onChange={handleChange}
-              name="firstname"
               required
             />
           </Form.Group>
@@ -71,10 +81,10 @@ export default function Register() {
             <Form.Label>Lastname</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter firstname"
+              placeholder="Enter lastname"
+              name="lastname"
               value={values.lastname}
               onChange={handleChange}
-              name="lastname"
               required
             />
           </Form.Group>
@@ -84,9 +94,9 @@ export default function Register() {
             <Form.Control
               type="email"
               placeholder="Enter email"
+              name="email"
               value={values.email}
               onChange={handleChange}
-              name="email"
               required
             />
           </Form.Group>
@@ -96,17 +106,21 @@ export default function Register() {
             <Form.Control
               type="password"
               placeholder="Enter password"
+              name="password"
               value={values.password}
               onChange={handleChange}
-              name="password"
               required
             />
           </Form.Group>
 
-          <button className="btn btn-primary" type="submit">
-            Submit
-          </button>
+          <Button type="submit" variant="primary" className="w-100">
+            Register
+          </Button>
         </Form>
+
+        <p className="text-center mt-3">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
 
       <section id="footer">

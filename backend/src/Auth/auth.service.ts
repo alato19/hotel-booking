@@ -16,48 +16,42 @@ export class AuthService {
   public async registerUser(
     bodyParam: RegisterDto,
   ): Promise<{ user: UserEntity; token: string }> {
-    try {
-      const checkUser = await this.userService.findByEmail(bodyParam.email);
-      console.log('checkUser---', checkUser);
-      if (checkUser) {
-        throw new HttpException('You are already registered', HttpStatus.FOUND);
-      }
-
-      const hashedPassword = await bcrypt.hash(bodyParam.password, 10);
-      const user = await this.userService.registerUser({
-        ...bodyParam,
-        password: hashedPassword,
-        roles: 'user',
-      });
-
-      const token = await this.jwtService.signAsync({ id: user.id });
-      return { user, token };
-    } catch (error) {
-      console.log('error in registerUser method', error);
-      throw new HttpException('User is not registered', HttpStatus.CONFLICT);
+    // Check if user already exists
+    const checkUser = await this.userService.findByEmail(bodyParam.email);
+    if (checkUser) {
+      throw new HttpException('Email already registered', HttpStatus.CONFLICT);
     }
+
+    // Hash password and create user
+    const hashedPassword = await bcrypt.hash(bodyParam.password, 10);
+    const user = await this.userService.registerUser({
+      ...bodyParam,
+      password: hashedPassword,
+      roles: 'user',
+    });
+
+    // Create JWT token with user id
+    const token = await this.jwtService.signAsync({ id: user.id });
+    return { user, token };
   }
 
   public async loginUser(
     bodyParam: LoginDto,
   ): Promise<{ user: UserEntity; token: string }> {
-    try {
-      const user = await this.userService.findByEmail(bodyParam.email);
-      if (!user) {
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-      }
-
-      const isMatch = await bcrypt.compare(bodyParam.password, user.password);
-      if (!isMatch) {
-        throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
-      }
-
-      const token = await this.jwtService.signAsync({ id: user.id });
-
-      return { user, token };
-    } catch (error) {
-      console.log('error in loginUser method', error);
-      throw new HttpException('Login failed', HttpStatus.UNAUTHORIZED);
+    // Find user by email
+    const user = await this.userService.findByEmail(bodyParam.email);
+    if (!user) {
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
+
+    // Check password
+    const isMatch = await bcrypt.compare(bodyParam.password, user.password);
+    if (!isMatch) {
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+    }
+
+    // Create JWT token
+    const token = await this.jwtService.signAsync({ id: user.id });
+    return { user, token };
   }
 }

@@ -23,24 +23,19 @@ let UserService = class UserService {
         this.usersRepository = usersRepository;
     }
     async findByEmail(email) {
-        try {
-            const result = await this.usersRepository.findOneBy({ email });
-            return result;
-        }
-        catch (error) {
-            console.log('error in findByEmail method', error);
-            throw new common_1.HttpException('an error happened', common_1.HttpStatus.NOT_FOUND);
-        }
+        const result = await this.usersRepository.findOneBy({ email });
+        return result;
     }
     async registerUser(data) {
-        try {
-            const result = await this.usersRepository.save(data);
-            return result;
+        const result = await this.usersRepository.save(data);
+        return result;
+    }
+    async findById(id) {
+        const result = await this.usersRepository.findOne({ where: { id } });
+        if (!result) {
+            throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
         }
-        catch (error) {
-            console.log('error in registerUser method', error);
-            throw new common_1.HttpException('User not registered', common_1.HttpStatus.NOT_FOUND);
-        }
+        return result;
     }
 };
 exports.UserService = UserService;

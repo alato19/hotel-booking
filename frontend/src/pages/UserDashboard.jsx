@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col, Tabs, Tab } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useAuthenticateContext } from "../context/AuthenticateContext";
+
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import Sidebar from "../components/User/Sidebar";
@@ -8,14 +11,28 @@ import MyBookings from "../components/User/MyBookings";
 import Support from "../components/User/Support";
 import optHeaderBackground from "../assets/header.jpg";
 
-export default function Dashboard() {
+export default function UserDashboard() {
   const [activeTab, setActiveTab] = useState("profile");
+  const { authUser, isAuthChecked } = useAuthenticateContext();
+  const navigate = useNavigate();
+
+  // ✅ Redirect to login if not authenticated
+  useEffect(() => {
+    if (isAuthChecked && (!authUser || authUser.role !== "user")) {
+      navigate("/login");
+    }
+  }, [authUser, isAuthChecked, navigate]);
+
+  // ✅ Show a loader while auth is being checked
+  if (!isAuthChecked) {
+    return <div className="text-center mt-5">Checking authentication...</div>;
+  }
 
   return (
     <div className="position-relative">
       <NavBar />
 
-      {/* Hero section with background */}
+      {/* Hero section */}
       <section
         className="text-white d-flex align-items-center"
         style={{
@@ -28,7 +45,9 @@ export default function Dashboard() {
       >
         <div className="container text-center">
           <h1 className="display-3 fw-bold mt-5">Your Dashboard</h1>
-          <p className="lead text-white">View Bookings and edit Profile</p>
+          <p className="lead text-white">
+            View your bookings and manage your profile
+          </p>
         </div>
       </section>
 
@@ -36,10 +55,12 @@ export default function Dashboard() {
       <div className="container py-5">
         <Container fluid className="mt-5 pt-4">
           <Row>
+            {/* Sidebar */}
             <Col md={3} lg={2} className="bg-light min-vh-100 p-3">
               <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
             </Col>
 
+            {/* Tabs content */}
             <Col md={9} lg={10} className="p-4">
               <Tabs
                 activeKey={activeTab}

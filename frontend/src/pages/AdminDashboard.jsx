@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthContext";
+import { useAuthenticateContext } from "../context/AuthenticateContext";
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
@@ -13,7 +13,7 @@ import { useRoomContext } from "../context/RoomContext";
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function AdminDashboard() {
-  const { user } = useAuth();
+  const { authUser } = useAuthenticateContext(); // ✅ Updated hook and property
   const [loading, setLoading] = useState(true);
   const { rooms, refreshRooms } = useRoomContext();
   const [err, setErr] = useState("");
@@ -88,8 +88,9 @@ export default function AdminDashboard() {
     }
   }
 
+  // ✅ Updated authentication check
   if (loading) return <p className="text-center mt-5">Loading...</p>;
-  if (!user || user.role !== "admin") {
+  if (!authUser || authUser.role !== "admin") {
     return <Navigate to="/login" />;
   }
 

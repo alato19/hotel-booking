@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useRoomContext } from "../context/RoomContext";
-import { useAuth } from "../context/AuthContext";
-import { Link, useLocation } from "react-router-dom";
+import { useAuthenticateContext } from "../context/AuthenticateContext";
+
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
@@ -22,48 +22,37 @@ const roomImages = {
   6: room6,
 };
 
-const handleBooking = async () => {
-  if (!user) {
-    navigate("/login");
-    return;
-  }
-  try {
-    const res = await axios.post(`http://localhost:3000/booking`, {
-      userId: user.id,
-      roomId: room.id,
-    });
-    alert(`Booking successful! ID: ${res.data.id}`);
-    console.log("Booking result:", res.data);
-  } catch (error) {
-    console.error("Booking error:", error.response?.data || error.message);
-    alert("Booking failed, please try again.");
-  }
-};
-
 export default function RoomDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const { rooms } = useRoomContext();
-  const room = rooms.find((room) => room?.id === parseInt(id));
   const location = useLocation();
+  const { authUser } = useAuthenticateContext();
+  const { rooms } = useRoomContext();
 
-  if (!room) return <p className="text-center mt-5">Room not found</p>;
+  const room = rooms.find((r) => r?.id === parseInt(id));
+
+  if (!room)
+    return <p className="text-center mt-5 fs-4 text-muted">Room not found.</p>;
 
   const handleBooking = async () => {
-    if (!user) {
-      navigate("/login");
+    if (!authUser) {
+      navigate("/login", { state: { from: location.pathname } });
       return;
     }
 
     try {
-      const res = await axios.post(`http://localhost:3000/bookings`, {
-        userId: user.id,
-        roomId: room.id,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL || "http://localhost:3000/"}bookings`,
+        {
+          userId: authUser.id,
+          roomId: room.id,
+        },
+        { withCredentials: true }
+      );
 
       alert(`Booking confirmed for ${room.title}!`);
       console.log("Booking result:", res.data);
+      navigate("/dashboard");
     } catch (error) {
       console.error("Booking error:", error.response?.data || error.message);
       alert("Booking failed. Please try again.");
@@ -74,7 +63,7 @@ export default function RoomDetail() {
     <div className="position-relative">
       <NavBar />
 
-      {/* Hero section with background */}
+      {/* Hero section */}
       <section
         className="text-white d-flex align-items-center"
         style={{
@@ -93,7 +82,7 @@ export default function RoomDetail() {
         </div>
       </section>
 
-      {/* Room details section */}
+      {/* Room details */}
       <div className="container py-5">
         <div className="row">
           {/* Left column: image */}
@@ -132,7 +121,7 @@ export default function RoomDetail() {
               </li>
             </ul>
 
-            {!user ? (
+            {!authUser ? (
               <Link
                 to="/login"
                 state={{ from: location.pathname }}

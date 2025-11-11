@@ -12,22 +12,23 @@ export class UserService {
   ) {}
 
   public async findByEmail(email: string): Promise<UserEntity | null> {
-    try {
-      const result = await this.usersRepository.findOneBy({ email });
-      return result;
-    } catch (error) {
-      console.log('error in findByEmail method', error);
-      throw new HttpException('an error happened', HttpStatus.NOT_FOUND);
-    }
+    const result = await this.usersRepository.findOneBy({ email });
+    return result;
   }
 
   public async registerUser(data: UserDto): Promise<UserEntity> {
-    try {
-      const result = await this.usersRepository.save(data);
-      return result;
-    } catch (error) {
-      console.log('error in registerUser method', error);
-      throw new HttpException('User not registered', HttpStatus.NOT_FOUND);
+    const result = await this.usersRepository.save(data);
+    return result;
+  }
+
+  public async findById(id: number): Promise<UserEntity> {
+    const result = await this.usersRepository.findOne({ where: { id } });
+
+    // If user not found, throw error
+    if (!result) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+
+    return result;
   }
 }

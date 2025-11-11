@@ -1,24 +1,30 @@
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuthenticateContext } from "../../context/AuthenticateContext";
 import "./Sidebar.css";
 
 export default function Sidebar({ activeTab, setActiveTab }) {
-  const { user } = useAuth();
-  const initials = user?.firstname
-    ? (user.firstname[0] + (user.lastname?.[0] || "")).toUpperCase()
+  const { authUser } = useAuthenticateContext();
+
+  // ✅ Derive initials safely
+  const initials = authUser?.firstname
+    ? (authUser.firstname[0] + (authUser.lastname?.[0] || "")).toUpperCase()
     : "U";
 
   return (
-    <div className="sidebar text-center">
-      <div className="avatar-fallback mb-3">{initials}</div>
+    <div className="sidebar text-center py-4">
+      {/* Avatar / initials */}
+      <div className="avatar-fallback mx-auto mb-3">{initials}</div>
 
+      {/* Divider */}
       <div className="sidebar-divider mx-auto mb-4"></div>
 
+      {/* Navigation links */}
       <Nav className="flex-column">
         <Nav.Link
           active={activeTab === "profile"}
           onClick={() => setActiveTab("profile")}
+          className="fw-semibold"
         >
           Profile
         </Nav.Link>
@@ -26,6 +32,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         <Nav.Link
           active={activeTab === "bookings"}
           onClick={() => setActiveTab("bookings")}
+          className="fw-semibold"
         >
           My Bookings
         </Nav.Link>
@@ -33,11 +40,12 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         <Nav.Link
           active={activeTab === "support"}
           onClick={() => setActiveTab("support")}
+          className="fw-semibold"
         >
           Support
         </Nav.Link>
 
-        <Nav.Link as={Link} to="/">
+        <Nav.Link as={Link} to="/" className="mt-4 text-muted">
           ← Back to Home
         </Nav.Link>
       </Nav>
