@@ -7,6 +7,7 @@ export declare class BookingService {
     private readonly roomRepository;
     constructor(bookingRepository: Repository<BookingEntity>, roomRepository: Repository<RoomEntity>);
     createBooking(body: CreateBookingDto): Promise<BookingEntity>;
+    findAll(): Promise<BookingEntity[]>;
     getBookingsByUser(userId: number): Promise<BookingEntity[]>;
     deleteBooking(id: number): Promise<{
         message: string;

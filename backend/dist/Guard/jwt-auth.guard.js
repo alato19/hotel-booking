@@ -19,15 +19,22 @@ let JwtAuthGuard = class JwtAuthGuard {
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
+        console.log('---- JwtAuthGuard ----');
+        console.log('Cookies:', request.cookies);
         const token = request.cookies['jwt'];
-        if (!token)
+        console.log('Token from cookie:', token);
+        if (!token) {
+            console.log('JwtAuthGuard → No token found');
             throw new common_1.UnauthorizedException();
+        }
         try {
             const payload = await this.jwtService.verifyAsync(token);
-            request.user = payload.id;
+            console.log('Decoded JWT payload:', payload);
+            request.user = payload;
             return true;
         }
-        catch {
+        catch (err) {
+            console.log('JwtAuthGuard → Token invalid:', err.message);
             throw new common_1.UnauthorizedException();
         }
     }

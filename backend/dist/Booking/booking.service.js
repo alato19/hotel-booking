@@ -42,6 +42,12 @@ let BookingService = class BookingService {
         await this.roomRepository.save(room);
         return booking;
     }
+    async findAll() {
+        return this.bookingRepository.find({
+            relations: ['room'],
+            order: { createdAt: 'DESC' },
+        });
+    }
     async getBookingsByUser(userId) {
         return this.bookingRepository.find({
             where: { user: { id: userId } },

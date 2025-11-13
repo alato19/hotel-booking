@@ -3,5 +3,5 @@ export declare class UserDto {
     lastname: string;
     email: string;
     password: string;
-    roles: string;
+    role: 'user' | 'admin';
 }

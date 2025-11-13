@@ -16,7 +16,7 @@ class UserDto {
     lastname;
     email;
     password;
-    roles;
+    role;
 }
 exports.UserDto = UserDto;
 __decorate([
@@ -42,5 +42,5 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UserDto.prototype, "roles", void 0);
+], UserDto.prototype, "role", void 0);
 //# sourceMappingURL=User.dto.js.map

@@ -35,6 +35,13 @@ export class BookingService {
     return booking;
   }
 
+  async findAll() {
+    return this.bookingRepository.find({
+      relations: ['room'],
+      order: { createdAt: 'DESC' },
+    });
+  }
+
   async getBookingsByUser(userId: number) {
     return this.bookingRepository.find({
       where: { user: { id: userId } },

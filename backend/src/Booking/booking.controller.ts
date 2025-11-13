@@ -20,6 +20,22 @@ export class BookingController {
     return this.bookingService.createBooking(body);
   }
 
+  @Get('all')
+  public async getAllBookings(): Promise<any> {
+    try {
+      const result = await this.bookingService.findAll();
+      return {
+        result,
+        status: 200,
+      };
+    } catch (error) {
+      throw new HttpException(
+        'Error from server',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Get('by-user/:userId')
   async getByUser(@Param('userId') userId: number) {
     return this.bookingService.getBookingsByUser(userId);

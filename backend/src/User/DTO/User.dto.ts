@@ -18,5 +18,5 @@ export class UserDto {
   password: string;
 
   @IsOptional()
-  roles: string;
+  role: 'user' | 'admin';
 }

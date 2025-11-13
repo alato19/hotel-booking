@@ -16,7 +16,6 @@ export class AuthService {
   public async registerUser(
     bodyParam: RegisterDto,
   ): Promise<{ user: UserEntity; token: string }> {
-    // Check if user already exists
     const checkUser = await this.userService.findByEmail(bodyParam.email);
     if (checkUser) {
       throw new HttpException('Email already registered', HttpStatus.CONFLICT);
@@ -27,31 +26,32 @@ export class AuthService {
     const user = await this.userService.registerUser({
       ...bodyParam,
       password: hashedPassword,
-      roles: 'user',
+      role: 'user',
     });
 
-    // Create JWT token with user id
-    const token = await this.jwtService.signAsync({ id: user.id });
+    // JWT payload
+    const payload = { id: user.id, email: user.email, role: user.role };
+    const token = await this.jwtService.signAsync(payload);
+
     return { user, token };
   }
 
   public async loginUser(
     bodyParam: LoginDto,
   ): Promise<{ user: UserEntity; token: string }> {
-    // Find user by email
     const user = await this.userService.findByEmail(bodyParam.email);
     if (!user) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    // Check password
     const isMatch = await bcrypt.compare(bodyParam.password, user.password);
     if (!isMatch) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    // Create JWT token
-    const token = await this.jwtService.signAsync({ id: user.id });
+    const payload = { id: user.id, email: user.email, role: user.role };
+    const token = await this.jwtService.signAsync(payload);
+
     return { user, token };
   }
 }

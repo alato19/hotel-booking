@@ -16,6 +16,10 @@ exports.RoomController = void 0;
 const common_1 = require("@nestjs/common");
 const room_service_1 = require("./room.service");
 const Room_dto_1 = require("./DTO/Room.dto");
+const common_2 = require("@nestjs/common");
+const roles_guard_1 = require("../Guard/roles.guard");
+const roles_decorator_1 = require("../decorators/roles.decorator");
+const jwt_auth_guard_1 = require("../Guard/jwt-auth.guard");
 let RoomController = class RoomController {
     roomService;
     constructor(roomService) {
@@ -56,6 +60,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RoomController.prototype, "getAllRooms", null);
 __decorate([
+    (0, common_2.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('admin'),
     (0, common_1.Post)('create'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -63,6 +69,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RoomController.prototype, "createRoom", null);
 __decorate([
+    (0, common_2.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('admin'),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -71,6 +79,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RoomController.prototype, "updateRoom", null);
 __decorate([
+    (0, common_2.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('admin'),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

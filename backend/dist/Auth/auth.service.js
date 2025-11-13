@@ -63,9 +63,10 @@ let AuthService = class AuthService {
         const user = await this.userService.registerUser({
             ...bodyParam,
             password: hashedPassword,
-            roles: 'user',
+            role: 'user',
         });
-        const token = await this.jwtService.signAsync({ id: user.id });
+        const payload = { id: user.id, email: user.email, role: user.role };
+        const token = await this.jwtService.signAsync(payload);
         return { user, token };
     }
     async loginUser(bodyParam) {
@@ -77,7 +78,8 @@ let AuthService = class AuthService {
         if (!isMatch) {
             throw new common_1.HttpException('Invalid credentials', common_1.HttpStatus.UNAUTHORIZED);
         }
-        const token = await this.jwtService.signAsync({ id: user.id });
+        const payload = { id: user.id, email: user.email, role: user.role };
+        const token = await this.jwtService.signAsync(payload);
         return { user, token };
     }
 };

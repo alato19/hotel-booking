@@ -39,6 +39,7 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`${API_BASE}/room/create`, {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newRoom),
       });
@@ -57,6 +58,7 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`${API_BASE}/room/${newRoom.id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newRoom),
       });
@@ -78,6 +80,7 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`${API_BASE}/room/${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       if (!res.ok) throw new Error("Failed to delete room");
 
