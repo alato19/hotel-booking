@@ -10,7 +10,12 @@ import {
 } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { CreateBookingDto } from './DTO/create-booking.dto';
+import { JwtAuthGuard } from 'src/Guard/jwt-auth.guard';
+import { RolesGuard } from 'src/Guard/roles.guard';
+import { UseGuards } from '@nestjs/common';
+import { Roles } from 'src/decorators/roles.decorator';
 
+@UseGuards(JwtAuthGuard)
 @Controller('bookings')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
@@ -20,6 +25,8 @@ export class BookingController {
     return this.bookingService.createBooking(body);
   }
 
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   @Get('all')
   public async getAllBookings(): Promise<any> {
     try {
