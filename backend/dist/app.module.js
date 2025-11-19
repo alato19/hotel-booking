@@ -9,36 +9,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const config_1 = require("@nestjs/config");
 const user_module_1 = require("./User/user.module");
 const room_module_1 = require("./Room/room.module");
-const Room_entity_1 = require("./Room/Entity/Room.entity");
 const auth_module_1 = require("./Auth/auth.module");
-const User_entity_1 = require("./User/Entity/User.entity");
 const booking_module_1 = require("./Booking/booking.module");
-const Booking_entity_1 = require("./Booking/Entity/Booking.entity");
+console.log('ENV CHECK DB_HOST:', process.env.DB_HOST);
+console.log('ENV CHECK DB_PORT:', process.env.DB_PORT);
+console.log('ENV CHECK DB_USER:', process.env.DB_USER);
+console.log('ENV CHECK DB_PASS:', process.env.DB_PASS);
+console.log('ENV CHECK DB_NAME:', process.env.DB_NAME);
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule.forRoot({ isGlobal: true }),
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'mysql',
-                host: 'localhost',
-                port: 3306,
-                username: 'root',
-                password: 'HOhodbDB@2025@.',
-                database: 'hotel',
-                entities: [Room_entity_1.RoomEntity, User_entity_1.UserEntity, Booking_entity_1.BookingEntity],
-                synchronize: true,
+                host: process.env.DB_HOST,
+                port: Number(process.env.DB_PORT),
+                username: process.env.DB_USER,
+                password: process.env.DB_PASS,
+                database: process.env.DB_NAME,
+                autoLoadEntities: true,
+                synchronize: false,
+                ssl: process.env.NODE_ENV === 'production'
+                    ? { rejectUnauthorized: false }
+                    : false,
             }),
             user_module_1.UserModule,
             room_module_1.RoomModule,
             auth_module_1.AuthModule,
             booking_module_1.BookingModule,
         ],
-        controllers: [],
-        providers: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
