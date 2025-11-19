@@ -14,8 +14,7 @@ export class BookingEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.bookings, { eager: true })
-  @JoinColumn({ name: 'userId' })
+  @ManyToOne(() => UserEntity)
   user: UserEntity;
 
   @ManyToOne(() => RoomEntity, (room) => room.bookings, { eager: true })
