@@ -47,7 +47,9 @@ export default function RoomDetail() {
         roomId: room.id,
       });
 
-      alert(`Booking confirmed for ${room.title}!`);
+      alert(
+        `Booking for ${room.title} is waiting for approval. You will get notified.`
+      );
       console.log("Booking result:", res.data);
 
       // ✅ automatically refresh bookings

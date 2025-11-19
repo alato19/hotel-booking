@@ -10,4 +10,8 @@ export declare class BookingController {
         message: string;
         bookingId: number;
     }>;
+    confirmBooking(id: number): Promise<{
+        message: string;
+        bookingId: number;
+    }>;
 }

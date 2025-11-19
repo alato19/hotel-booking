@@ -31,10 +31,7 @@ let BookingController = class BookingController {
     async getAllBookings() {
         try {
             const result = await this.bookingService.findAll();
-            return {
-                result,
-                status: 200,
-            };
+            return result;
         }
         catch (error) {
             throw new common_1.HttpException('Error from server', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
@@ -50,6 +47,9 @@ let BookingController = class BookingController {
         catch (error) {
             throw new common_1.HttpException('Failed to delete booking', common_1.HttpStatus.BAD_REQUEST);
         }
+    }
+    async confirmBooking(id) {
+        return this.bookingService.confirmBooking(id);
     }
 };
 exports.BookingController = BookingController;
@@ -82,6 +82,15 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], BookingController.prototype, "deleteBooking", null);
+__decorate([
+    (0, common_2.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('admin'),
+    (0, common_1.Patch)(':id/approve'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookingController.prototype, "confirmBooking", null);
 exports.BookingController = BookingController = __decorate([
     (0, common_2.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('bookings'),

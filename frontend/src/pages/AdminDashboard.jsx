@@ -9,6 +9,7 @@ import optHeaderBackground from "../assets/header.jpg";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import { useRoomContext } from "../context/RoomContext";
+import { useBookingsContext } from "../context/BookingContext";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -29,10 +30,18 @@ export default function AdminDashboard() {
     tvService: false,
     isPublished: true,
   });
+  const { adminBookings, refreshAdminBookings } = useBookingsContext();
 
   useEffect(() => {
-    refreshRooms().finally(() => setLoading(false));
-  }, []);
+    async function loadData() {
+      await refreshRooms();
+      if (authUser?.role === "admin") {
+        await refreshAdminBookings();
+      }
+      setLoading(false);
+    }
+    loadData();
+  }, [authUser, refreshRooms, refreshAdminBookings]);
 
   async function handleCreateRoom(e) {
     e.preventDefault();
@@ -88,6 +97,23 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error(error);
       alert("Error deleting room");
+    }
+  }
+
+  async function handleApproveBooking(id) {
+    try {
+      const res = await fetch(`${API_BASE}/bookings/${id}/approve`, {
+        method: "PATCH",
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to approve booking");
+
+      await Promise.all([refreshRooms(), refreshAdminBookings()]);
+      alert(`Booking ${id} approved successfully`);
+    } catch (error) {
+      console.error(error);
+      alert("Error approving booking");
     }
   }
 
@@ -193,7 +219,49 @@ export default function AdminDashboard() {
             ))}
           </tbody>
         </Table>
+        <div>
+          <h3 className="mt-5 mb-3">Pending Bookings</h3>
 
+          {adminBookings.length === 0 ? (
+            <p>No bookings found.</p>
+          ) : (
+            <Table bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Room</th>
+                  <th>User</th>
+                  <th>Confirmed</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {adminBookings.map((booking) => (
+                  <tr key={booking.id}>
+                    <td>{booking.id}</td>
+                    <td>{booking.room ? booking.room.title : "-"}</td>
+                    <td>
+                      {booking.user
+                        ? booking.user.email || booking.user.firstname
+                        : "-"}
+                    </td>
+                    <td>{booking.confirmed ? "Yes" : "No"}</td>
+                    <td>
+                      <Button
+                        size="sm"
+                        variant="success"
+                        disabled={booking.confirmed}
+                        onClick={() => handleApproveBooking(booking.id)}
+                      >
+                        {booking.confirmed ? "Approved" : "Approve"}
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+        </div>
         <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Add New Room</Modal.Title>

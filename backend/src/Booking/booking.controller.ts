@@ -7,6 +7,7 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  Patch,
 } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { CreateBookingDto } from './DTO/create-booking.dto';
@@ -31,10 +32,7 @@ export class BookingController {
   public async getAllBookings(): Promise<any> {
     try {
       const result = await this.bookingService.findAll();
-      return {
-        result,
-        status: 200,
-      };
+      return result;
     } catch (error) {
       throw new HttpException(
         'Error from server',
@@ -59,5 +57,13 @@ export class BookingController {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  // Approve new bookings by Admin
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  @Patch(':id/approve')
+  async confirmBooking(@Param('id') id: number) {
+    return this.bookingService.confirmBooking(id);
   }
 }

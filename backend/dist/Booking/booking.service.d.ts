@@ -9,6 +9,10 @@ export declare class BookingService {
     createBooking(body: CreateBookingDto): Promise<BookingEntity>;
     findAll(): Promise<BookingEntity[]>;
     getBookingsByUser(userId: number): Promise<BookingEntity[]>;
+    confirmBooking(id: number): Promise<{
+        message: string;
+        bookingId: number;
+    }>;
     deleteBooking(id: number): Promise<{
         message: string;
         bookingId: number;

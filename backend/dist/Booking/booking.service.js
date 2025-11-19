@@ -30,21 +30,17 @@ let BookingService = class BookingService {
         const room = await this.roomRepository.findOne({ where: { id: roomId } });
         if (!room)
             throw new common_1.HttpException('Room not found', common_1.HttpStatus.NOT_FOUND);
-        if (room.isBooked)
-            throw new common_1.HttpException('Room already booked', common_1.HttpStatus.CONFLICT);
         const booking = this.bookingRepository.create({
             user: { id: userId },
             room: { id: roomId },
-            confirmed: true,
         });
         await this.bookingRepository.save(booking);
-        room.isBooked = true;
         await this.roomRepository.save(room);
         return booking;
     }
     async findAll() {
         return this.bookingRepository.find({
-            relations: ['room'],
+            relations: ['room', 'user'],
             order: { createdAt: 'DESC' },
         });
     }
@@ -54,6 +50,20 @@ let BookingService = class BookingService {
             relations: ['room'],
             order: { createdAt: 'DESC' },
         });
+    }
+    async confirmBooking(id) {
+        const booking = await this.bookingRepository.findOne({
+            where: { id },
+            relations: ['room'],
+        });
+        if (!booking) {
+            throw new common_1.HttpException('Booking not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        booking.confirmed = true;
+        booking.room.isBooked = true;
+        await this.bookingRepository.save(booking);
+        await this.roomRepository.save(booking.room);
+        return { message: 'Booking approved successfully', bookingId: id };
     }
     async deleteBooking(id) {
         const booking = await this.bookingRepository.findOne({
