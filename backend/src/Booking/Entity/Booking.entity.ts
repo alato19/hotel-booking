@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '../../User/Entity/User.entity';
-import { RoomEntity } from 'src/Room/Entity/Room.entity';
+import { RoomEntity } from '../../Room/Entity/Room.entity';
 
 @Entity('booking')
 export class BookingEntity {
