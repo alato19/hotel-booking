@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { BookingService } from './booking.service';
 import { BookingController } from './booking.controller';
-import { UserEntity } from 'src/User/Entity/User.entity';
-import { RoomEntity } from 'src/Room/Entity/Room.entity';
+
 import { BookingEntity } from './Entity/Booking.entity';
+import { UserEntity } from '../User/Entity/User.entity';
+import { RoomEntity } from '../Room/Entity/Room.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([BookingEntity, UserEntity, RoomEntity])],

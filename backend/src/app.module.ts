@@ -1,19 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+
 import { UserModule } from './User/user.module';
 import { RoomModule } from './Room/room.module';
 import { AuthModule } from './Auth/auth.module';
 import { BookingModule } from './Booking/booking.module';
 
-console.log('ENV CHECK DB_HOST:', process.env.DB_HOST);
-console.log('ENV CHECK DB_PORT:', process.env.DB_PORT);
-console.log('ENV CHECK DB_USER:', process.env.DB_USER);
-console.log('ENV CHECK DB_PASS:', process.env.DB_PASS);
-console.log('ENV CHECK DB_NAME:', process.env.DB_NAME);
-
 @Module({
   imports: [
+    // Load environment variables BEFORE TypeORM config
     ConfigModule.forRoot({ isGlobal: true }),
 
     TypeOrmModule.forRoot({
@@ -23,8 +19,13 @@ console.log('ENV CHECK DB_NAME:', process.env.DB_NAME);
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
+
+      // Automatically register all entities (important for production)
       autoLoadEntities: true,
+
       synchronize: false,
+
+      // Enable SSL on Render / disable locally
       ssl:
         process.env.NODE_ENV === 'production'
           ? { rejectUnauthorized: false }
