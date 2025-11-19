@@ -13,7 +13,7 @@ import {
 import { RoomService } from './room.service';
 import { RoomDto } from './DTO/Room.dto';
 import { UseGuards } from '@nestjs/common';
-import { RolesGuard } from 'src/Guard/roles.guard';
+import { RolesGuard } from '../Guard/roles.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { JwtAuthGuard } from '../Guard/jwt-auth.guard';
 
