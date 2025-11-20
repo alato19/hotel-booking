@@ -17,15 +17,19 @@ import { useRoomContext } from "../context/RoomContext";
 import { useBookingsContext } from "../context/BookingContext";
 import "./AdminDashboard.css";
 
+// IMPORTANT: Make sure the API ends with a slash
 const API_BASE =
-  import.meta.env.VITE_API_URL || "https://hotel-booking-d4se.onrender.com";
+  import.meta.env.VITE_API_URL || "https://hotel-booking-d4se.onrender.com/";
 
 export default function AdminDashboard() {
   const { authUser } = useAuthenticateContext();
-  const [loading, setLoading] = useState(true);
   const { rooms, refreshRooms } = useRoomContext();
-  const [isEditing, setIsEditing] = useState(false);
+  const { adminBookings, refreshAdminBookings } = useBookingsContext();
+
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
   const [newRoom, setNewRoom] = useState({
     title: "",
     description: "",
@@ -36,8 +40,6 @@ export default function AdminDashboard() {
     tvService: false,
     isPublished: true,
   });
-
-  const { adminBookings, refreshAdminBookings } = useBookingsContext();
 
   useEffect(() => {
     async function loadData() {
@@ -52,6 +54,79 @@ export default function AdminDashboard() {
 
   if (loading) return <p className="text-center mt-5">Loading...</p>;
   if (!authUser || authUser.role !== "admin") return <Navigate to="/login" />;
+
+  // ---------------------------- CRUD ACTIONS ----------------------------
+
+  // CREATE room
+  async function handleCreateRoom(e) {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${API_BASE}rooms`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newRoom),
+      });
+      if (!res.ok) throw new Error("Failed to create room");
+      await refreshRooms();
+      setShowModal(false);
+    } catch (err) {
+      console.error(err);
+      alert("Error creating room");
+    }
+  }
+
+  // EDIT room
+  async function handleEditRoom(e) {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${API_BASE}rooms/${newRoom.id}`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newRoom),
+      });
+      if (!res.ok) throw new Error("Failed to update room");
+      await refreshRooms();
+      setShowModal(false);
+    } catch (err) {
+      console.error(err);
+      alert("Error updating room");
+    }
+  }
+
+  // DELETE room
+  async function handleDeleteRoom(roomId) {
+    if (!confirm("Are you sure you want to delete this room?")) return;
+    try {
+      const res = await fetch(`${API_BASE}rooms/${roomId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to delete room");
+      await refreshRooms();
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting room");
+    }
+  }
+
+  // APPROVE booking
+  async function handleApproveBooking(bookingId) {
+    try {
+      const res = await fetch(`${API_BASE}bookings/approve/${bookingId}`, {
+        method: "PATCH",
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to approve booking");
+      await refreshAdminBookings();
+    } catch (err) {
+      console.error(err);
+      alert("Error approving booking");
+    }
+  }
+
+  // ---------------------------- RENDER UI ----------------------------
 
   return (
     <>
@@ -74,7 +149,7 @@ export default function AdminDashboard() {
       </section>
 
       <Container className="py-5">
-        {/* Manage Rooms */}
+        {/* ---------------- ROOMS TABLE ---------------- */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h3 className="text-primary">Rooms Management</h3>
           <Button
@@ -150,7 +225,7 @@ export default function AdminDashboard() {
           </tbody>
         </Table>
 
-        {/* Pending bookings */}
+        {/* ---------------- PENDING BOOKINGS TABLE ---------------- */}
         <h3 className="text-primary mt-5 mb-3">Pending Bookings</h3>
         <Table bordered hover responsive className="shadow-sm">
           <thead className="table-light">
@@ -194,7 +269,7 @@ export default function AdminDashboard() {
         </Table>
       </Container>
 
-      {/* Modal for create/edit */}
+      {/* ---------------- Modal for Room Create/Edit ---------------- */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{isEditing ? "Edit Room" : "New Room"}</Modal.Title>
