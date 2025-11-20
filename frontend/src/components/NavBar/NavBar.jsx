@@ -33,7 +33,12 @@ function NavBar() {
     >
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <img src={Logo} alt="Hotel Paradise Logo" className="brand-logo" />
+          <img
+            src={Logo}
+            alt="Hotel Paradise Logo"
+            className="navbar-logo"
+            height="60"
+          />
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="main-nav" />
