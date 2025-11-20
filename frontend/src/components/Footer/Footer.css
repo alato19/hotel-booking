@@ -1,19 +1,21 @@
-/* Footer layout */
+/* Footer background */
 .footer {
   background-color: #1c1c1c;
-  color: #ffffff;
+  color: #d6d6d6; /* Softer, readable text */
   position: relative;
 }
 
 /* Logo */
 .footer-logo {
   max-width: 130px;
-  filter: brightness(1.2);
+  filter: brightness(1.3);
 }
 
 /* Section titles */
 .footer-title {
   color: #8b6f47;
+  font-size: 0.85rem;
+  text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 0.75rem;
 }
@@ -24,7 +26,7 @@
 }
 
 .footer-links a {
-  color: #d3d3d3;
+  color: #e4e4e4;
   text-decoration: none;
   font-size: 0.95rem;
   transition: color 0.3s ease;
@@ -36,6 +38,7 @@
 
 /* Social icons */
 .footer a svg {
+  color: #e4e4e4;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
@@ -44,10 +47,11 @@
   color: #8b6f47;
 }
 
-/* Bottom area */
+/* Bottom border area */
 .footer-bottom {
   padding-top: 1rem;
-  border-top: 1px solid #2f2f2f;
+  border-top: 1px solid #2c2c2c;
+  color: #b8b8b8;
 }
 
 /* Responsive */

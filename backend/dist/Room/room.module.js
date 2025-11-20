@@ -19,7 +19,7 @@ exports.RoomModule = RoomModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([Room_entity_1.RoomEntity])],
         controllers: [room_controller_1.RoomController],
-        providers: [room_service_1.RoomService]
+        providers: [room_service_1.RoomService],
     })
 ], RoomModule);
 //# sourceMappingURL=room.module.js.map

@@ -121,21 +121,18 @@ export default function Home() {
             </div>
 
             {/* Apply */}
-            <div className="col-6 col-md-2 d-grid">
-              <Button
-                type="submit"
-                className="btn-primary fw-bold text-uppercase"
-              >
-                Check
+            <div
+              id="filter-buttons"
+              className="col-md-4 p-3 d-flex align-items-center justify-content-center"
+            >
+              <Button type="submit" className="btn-check-availability w-100">
+                Check Availability
               </Button>
-            </div>
 
-            {/* Reset */}
-            <div className="col-6 col-md-2 d-grid">
               <Button
                 type="button"
                 onClick={handleReset}
-                className="btn-outline-secondary fw-bold text-uppercase"
+                className="btn-reset w-100"
               >
                 Reset
               </Button>

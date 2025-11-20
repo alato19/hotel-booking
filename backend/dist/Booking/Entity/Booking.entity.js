@@ -26,8 +26,7 @@ __decorate([
     __metadata("design:type", Number)
 ], BookingEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => User_entity_1.UserEntity, (user) => user.bookings, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'userId' }),
+    (0, typeorm_1.ManyToOne)(() => User_entity_1.UserEntity),
     __metadata("design:type", User_entity_1.UserEntity)
 ], BookingEntity.prototype, "user", void 0);
 __decorate([

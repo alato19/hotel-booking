@@ -1,7 +1,7 @@
-import { UserService } from 'src/User/user.service';
+import { UserService } from '../User/user.service';
 import { RegisterDto } from './DTO/register.dto';
 import { LoginDto } from './DTO/login.dto';
-import { UserEntity } from 'src/User/Entity/User.entity';
+import { UserEntity } from '../User/Entity/User.entity';
 import { JwtService } from '@nestjs/jwt';
 export declare class AuthService {
     private readonly userService;

@@ -1,4 +1,4 @@
-import { BookingEntity } from 'src/Booking/Entity/Booking.entity';
+import { BookingEntity } from '../../Booking/Entity/Booking.entity';
 export declare class RoomEntity {
     id: number;
     title: string;

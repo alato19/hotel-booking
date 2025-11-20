@@ -9,7 +9,7 @@ import AdminRoute from "./components/AdminRoute/index.jsx";
 import AuthUserRoute from "./components/AuthUserRoute/index.jsx";
 
 import Home from "./pages/Home";
-import Rooms from "./pages/Rooms-A.jsx";
+import Rooms from "./pages/Rooms.jsx";
 import RoomDetail from "./pages/RoomDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";

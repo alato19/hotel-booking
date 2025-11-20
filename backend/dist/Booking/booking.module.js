@@ -11,9 +11,9 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const booking_service_1 = require("./booking.service");
 const booking_controller_1 = require("./booking.controller");
+const Booking_entity_1 = require("./Entity/Booking.entity");
 const User_entity_1 = require("../User/Entity/User.entity");
 const Room_entity_1 = require("../Room/Entity/Room.entity");
-const Booking_entity_1 = require("./Entity/Booking.entity");
 let BookingModule = class BookingModule {
 };
 exports.BookingModule = BookingModule;

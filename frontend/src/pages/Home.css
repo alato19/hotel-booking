@@ -51,3 +51,28 @@
   width: 140px;
   margin: 10px auto 20px;
 }
+
+/* Improve filter buttons elegance & spacing */
+#filter-buttons .btn {
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* Space between Check + Reset */
+#filter-buttons .btn + .btn {
+  margin-left: 12px;
+}
+
+/* Better stacking on mobile */
+@media (max-width: 576px) {
+  #filter-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #filter-buttons .btn + .btn {
+    margin-left: 0;
+  }
+}

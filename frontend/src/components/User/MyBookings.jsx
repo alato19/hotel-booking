@@ -20,10 +20,13 @@ export default function MyBookings() {
       return;
 
     try {
-      const res = await fetch(`https://hotel-booking-d4se.onrender.com/bookings/${bookingId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `https://hotel-booking-d4se.onrender.com/bookings/${bookingId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       if (!res.ok) throw new Error("Failed to cancel booking");
       alert("Booking cancelled successfully!");
       refreshBookings();
@@ -54,47 +57,48 @@ export default function MyBookings() {
   }
 
   return (
-  <div className="my-bookings-wrapper mt-3">
-    <h3 className="mb-4">My Bookings</h3>
-    <div className="table-responsive">
-      <Table striped bordered hover className="shadow-sm">
-        <thead className="table-light">
-          <tr>
-            <th>#</th>
-            <th>Room</th>
-            <th>Status</th>
-            <th>Booked On</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bookings.map((b, index) => (
-            <tr key={b.id}>
-              <td>{index + 1}</td>
-              <td>{b.room?.title || "N/A"}</td>
-              <td
-                className={
-                  b.confirmed
-                    ? "text-success fw-semibold"
-                    : "text-warning fw-semibold"
-                }
-              >
-                {b.confirmed ? "Confirmed" : "Pending"}
-              </td>
-              <td>{new Date(b.createdAt).toLocaleDateString()}</td>
-              <td>
-                <Button
-                  variant="outline-danger"
-                  size="sm"
-                  onClick={() => cancelBooking(b.id)}
-                >
-                  Cancel
-                </Button>
-              </td>
+    <div className="my-bookings-wrapper mt-3">
+      <h3 className="mb-4">My Bookings</h3>
+      <div className="table-responsive">
+        <Table striped bordered hover className="shadow-sm">
+          <thead className="table-light">
+            <tr>
+              <th>#</th>
+              <th>Room</th>
+              <th>Status</th>
+              <th>Booked On</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {bookings.map((b, index) => (
+              <tr key={b.id}>
+                <td>{index + 1}</td>
+                <td>{b.room?.title || "N/A"}</td>
+                <td
+                  className={
+                    b.confirmed
+                      ? "text-success fw-semibold"
+                      : "text-warning fw-semibold"
+                  }
+                >
+                  {b.confirmed ? "Confirmed" : "Pending"}
+                </td>
+                <td>{new Date(b.createdAt).toLocaleDateString()}</td>
+                <td>
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => cancelBooking(b.id)}
+                  >
+                    Cancel
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </div>
-  </div>
-);
+  );
+}

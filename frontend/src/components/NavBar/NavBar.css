@@ -1,51 +1,37 @@
-/* Brand */
-.brand-logo {
-  max-height: 58px;
-  transition: transform 0.3s ease;
-}
-
-.brand-logo:hover {
-  transform: scale(1.06);
-}
-
-/* Navbar container */
+/* Default state: transparent but dark overlay for contrast */
 .custom-navbar {
-  background-color: #ffffff !important;
-  padding: 0.75rem 1rem;
-  transition: box-shadow 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.3s ease;
 }
 
+/* Scrolled: white navbar with subtle shadow */
 .custom-navbar.scrolled {
+  background-color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* Links */
+/* Link colors: white text on top, transitions when scrolled */
 .custom-navbar .nav-link {
-  color: #333 !important;
+  color: #ffffff !important;
   margin-left: 1rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
+/* When scrolled: change to dark text */
+.custom-navbar.scrolled .nav-link {
+  color: #333 !important;
+}
+
+/* Hover + active always highlight brand color */
 .custom-navbar .nav-link:hover,
 .custom-navbar .nav-link.active {
   color: #8b6f47 !important;
+  text-decoration: none;
 }
 
-/* Dropdown */
-.user-dropdown .dropdown-menu {
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-.user-dropdown .dropdown-item:hover {
-  background-color: #f5efe5;
-  color: #8b6f47;
-}
-
-/* Small screens */
+/* Mobile adjustments */
 @media (max-width: 992px) {
   .navbar-nav {
     text-align: center;
@@ -53,10 +39,6 @@
   }
 
   .custom-navbar .nav-link {
-    margin: 0.6rem 0;
+    margin: 0.5rem 0;
   }
-}
-
-.navbar-space {
-  padding-top: 80px;
 }

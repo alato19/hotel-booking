@@ -14,11 +14,6 @@ const user_module_1 = require("./User/user.module");
 const room_module_1 = require("./Room/room.module");
 const auth_module_1 = require("./Auth/auth.module");
 const booking_module_1 = require("./Booking/booking.module");
-console.log('ENV CHECK DB_HOST:', process.env.DB_HOST);
-console.log('ENV CHECK DB_PORT:', process.env.DB_PORT);
-console.log('ENV CHECK DB_USER:', process.env.DB_USER);
-console.log('ENV CHECK DB_PASS:', process.env.DB_PASS);
-console.log('ENV CHECK DB_NAME:', process.env.DB_NAME);
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;

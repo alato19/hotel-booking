@@ -1,9 +1,9 @@
 import { AuthService } from './auth.service';
 import { RegisterDto } from './DTO/register.dto';
 import { LoginDto } from './DTO/login.dto';
-import { UserEntity } from 'src/User/Entity/User.entity';
+import { UserEntity } from '../User/Entity/User.entity';
 import type { Response, Request } from 'express';
-import { UserService } from 'src/User/user.service';
+import { UserService } from '../User/user.service';
 export declare class AuthController {
     private readonly authService;
     private readonly userService;
