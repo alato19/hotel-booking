@@ -60,3 +60,17 @@
     margin-bottom: 0.5rem;
   }
 }
+
+/* Make footer descriptions more visible */
+.footer .text-muted {
+  color: #ffffff !important;
+}
+
+/* Optional: softer opacity for elegance */
+.footer p.small {
+  opacity: 0.9;
+}
+
+.footer-bottom small {
+  opacity: 0.85;
+}

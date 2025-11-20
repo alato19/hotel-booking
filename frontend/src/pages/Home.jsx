@@ -70,18 +70,12 @@ export default function Home() {
 
         {/* Filter Form */}
         <div className="container hero-form-container">
-          <Form
-            className="row g-0 shadow bg-white p-3 rounded-3"
-            onSubmit={handleSubmit}
-          >
+          <div className="booking-box d-flex flex-wrap align-items-end">
             {/* Arrival */}
-            <div className="col-12 col-md-3 mb-3 mb-md-0">
-              <Form.Label className="fw-semibold small text-uppercase text-muted">
-                Arrival
-              </Form.Label>
+            <div className="booking-item me-md-2 mb-3">
+              <label>ARRIVAL DATE</label>
               <Form.Control
                 type="date"
-                className="text-center"
                 value={filters.arrival}
                 onChange={(e) =>
                   setFilters({ ...filters, arrival: e.target.value })
@@ -90,13 +84,10 @@ export default function Home() {
             </div>
 
             {/* Departure */}
-            <div className="col-12 col-md-3 mb-3 mb-md-0">
-              <Form.Label className="fw-semibold small text-uppercase text-muted">
-                Departure
-              </Form.Label>
+            <div className="booking-item me-md-2 mb-3">
+              <label>DEPARTURE DATE</label>
               <Form.Control
                 type="date"
-                className="text-center"
                 value={filters.departure}
                 onChange={(e) =>
                   setFilters({ ...filters, departure: e.target.value })
@@ -105,14 +96,11 @@ export default function Home() {
             </div>
 
             {/* People */}
-            <div className="col-12 col-md-2 mb-3 mb-md-0">
-              <Form.Label className="fw-semibold small text-uppercase text-muted">
-                People
-              </Form.Label>
+            <div className="booking-item me-md-2 mb-3">
+              <label>PEOPLE</label>
               <Form.Control
                 type="number"
                 min="1"
-                className="text-center"
                 value={filters.people}
                 onChange={(e) =>
                   setFilters({ ...filters, people: e.target.value })
@@ -120,24 +108,21 @@ export default function Home() {
               />
             </div>
 
-            {/* Apply */}
-            <div
-              id="filter-buttons"
-              className="col-md-4 p-3 d-flex align-items-center justify-content-center"
-            >
-              <Button type="submit" className="btn-check-availability w-100">
+            {/* Buttons */}
+            <div className="booking-buttons mb-3">
+              <Button type="submit" className="booking-btn">
                 Check Availability
               </Button>
 
               <Button
                 type="button"
                 onClick={handleReset}
-                className="btn-reset w-100"
+                className="booking-btn"
               >
                 Reset
               </Button>
             </div>
-          </Form>
+          </div>
         </div>
       </section>
 

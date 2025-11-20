@@ -2,7 +2,11 @@
 .home-hero {
   min-height: 75vh;
   width: 100%;
-  padding-top: 100px; /* space under navbar */
+  padding-top: 100px; /* under navbar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .text-shadow {
@@ -18,21 +22,88 @@
   font-size: clamp(1rem, 2.3vw, 1.4rem);
 }
 
-/* SEARCH FORM */
+/* BOOKING FORM BAR */
 .hero-form-container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
+  margin-top: 1rem;
 }
 
-.hero-form-container .form-label {
-  font-size: 0.7rem;
+.booking-box {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  background: none; /* ❌ removed background */
+  padding: 0; /* ❌ removed padding */
+}
+
+.booking-item {
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.booking-item label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #b8965c !important; /* Brighter gold */
   letter-spacing: 1px;
+  margin-bottom: 4px;
 }
 
-/* Stack better on phones */
-@media (max-width: 576px) {
-  .hero-form-container form {
-    border-radius: 0.75rem;
+.booking-item input {
+  border: none;
+  border-bottom: 2px solid #ddd;
+  padding: 5px 4px;
+  font-size: 1rem;
+  outline: none;
+  background: transparent;
+}
+
+.booking-item input:focus {
+  border-bottom-color: #b8965c;
+}
+
+/* Buttons */
+.booking-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.booking-btn {
+  height: 100%;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+/* MOBILE STYLING */
+@media (max-width: 768px) {
+  .booking-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 1rem;
+  }
+
+  .booking-item {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .booking-buttons {
+    width: 100%;
+  }
+
+  .booking-btn {
+    width: 100%;
+    height: 42px;
   }
 }
 
@@ -52,27 +123,15 @@
   margin: 10px auto 20px;
 }
 
-/* Improve filter buttons elegance & spacing */
-#filter-buttons .btn {
-  padding: 0.85rem 1.25rem;
-  font-weight: 600;
-  border-radius: 6px;
-  letter-spacing: 0.5px;
+/* Minimal calendar icon for date inputs */
+.booking-item input[type="date"] {
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' fill='none' stroke='%23b8965c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='3' y='5' width='14' height='12' rx='2'/%3E%3Cpath d='M3 9h14M8 3v4M12 3v4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 18px;
+  padding-right: 28px; /* space for icon */
 }
 
-/* Space between Check + Reset */
-#filter-buttons .btn + .btn {
-  margin-left: 12px;
-}
-
-/* Better stacking on mobile */
-@media (max-width: 576px) {
-  #filter-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  #filter-buttons .btn + .btn {
-    margin-left: 0;
-  }
+.booking-item input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0; /* hide default icon */
 }

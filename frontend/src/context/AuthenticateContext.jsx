@@ -10,12 +10,11 @@ const AuthenticateContext = createContext({});
 
 export const AuthenticateProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
-  const [trigger, setTrigger] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   useEffect(() => {
     checkAuthUser();
-  }, [trigger]);
+  }, []);
 
   // ✅ Register user
   const register = async (data) => {
@@ -43,10 +42,10 @@ export const AuthenticateProvider = ({ children }) => {
   const logout = async () => {
     try {
       await logout_user_service();
-      setAuthUser(null);
-      setTrigger(!trigger); // trigger re-check
     } catch (error) {
       console.error("Logout error:", error);
+    } finally {
+      setAuthUser(null);
     }
   };
 
