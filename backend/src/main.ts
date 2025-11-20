@@ -10,9 +10,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    origin: [
+      'http://localhost:5173',
+      'https://honeydew-beaver-202679.hostingersite.com',
+      'https://www.honeydew-beaver-202679.hostingersite.com',
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
   app.use(cookieParser());
   app.useGlobalPipes(

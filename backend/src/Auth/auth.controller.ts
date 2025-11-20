@@ -30,7 +30,11 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<UserEntity> {
     const { user, token } = await this.authService.registerUser(bodyParam);
-    response.cookie('jwt', token, { httpOnly: true });
+    response.cookie('jwt', token, {
+      httpOnly: true,
+      secure: true, // IMPORTANT for HTTPS
+      sameSite: 'none', // Required when using cross-origin cookies
+    });
     return user;
   }
 
@@ -40,7 +44,11 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<UserEntity> {
     const { user, token } = await this.authService.loginUser(bodyParam);
-    response.cookie('jwt', token, { httpOnly: true });
+    response.cookie('jwt', token, {
+      httpOnly: true,
+      secure: true, // IMPORTANT for HTTPS
+      sameSite: 'none', // Required when using cross-origin cookies
+    });
     return user;
   }
 
