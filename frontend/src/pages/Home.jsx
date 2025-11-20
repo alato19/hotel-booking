@@ -1,14 +1,13 @@
+//Home.jsx
 import { useRoomContext } from "../context/RoomContext.jsx";
 import headerBackground from "../assets/Slider-v1.jpg";
 import NavBar from "../components/NavBar/NavBar";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "../pages/Home.css";
 import icon from "../assets/icon-our.png";
 import RoomCard from "../components/RoomsCard";
 import Footer from "../components/Footer/Footer";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Home() {
   const { rooms } = useRoomContext();
@@ -45,122 +44,98 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const results = applyFilters(rooms);
-    setFilteredRooms(results);
   };
 
   const handleReset = () => {
     setFilters({ arrival: "", departure: "", people: 1 });
-    setFilteredRooms(rooms);
   };
 
   return (
     <div className="position-relative">
       <NavBar />
 
+      {/* Hero Section */}
       <section
-        className="text-white d-flex flex-column justify-content-center align-items-center text-center"
+        className="home-hero text-white d-flex flex-column justify-content-center align-items-center text-center"
         style={{
           backgroundImage: `url(${headerBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "100vh",
-          width: "100%",
         }}
       >
-        <div className="container header">
-          <h1 className="display-3 fw-bold">Welcome to Paradise</h1>
-          <p className="lead text-white">Hotels and Resorts</p>
+        <div className="container">
+          <h1 className="fw-bold text-shadow">Welcome to Paradise</h1>
+          <p className="lead text-white mb-4">Hotels & Resorts</p>
         </div>
 
-        <div className="container">
+        {/* Filter Form */}
+        <div className="container hero-form-container">
           <Form
-            className="row g-0 justify-content-center shadow"
+            className="row g-0 shadow bg-white p-3 rounded-3"
             onSubmit={handleSubmit}
           >
-            {/* Arrival Date */}
-            <div className="col-md-3 p-3 bg-white border">
+            {/* Arrival */}
+            <div className="col-12 col-md-3 mb-3 mb-md-0">
               <Form.Label className="fw-semibold small text-uppercase text-muted">
-                Arrival Date
+                Arrival
               </Form.Label>
-              <div className="input-group">
-                <Form.Control
-                  type="date"
-                  value={filters.arrival}
-                  onChange={(e) =>
-                    setFilters({ ...filters, arrival: e.target.value })
-                  }
-                  className="border-0 fs-4 fw-light text-center"
-                />
-                <span className="input-group-text bg-white border-0">
-                  <i className="fas fa-calendar-alt text-muted"></i>
-                </span>
-              </div>
+              <Form.Control
+                type="date"
+                className="text-center"
+                value={filters.arrival}
+                onChange={(e) =>
+                  setFilters({ ...filters, arrival: e.target.value })
+                }
+              />
             </div>
 
-            {/* Departure Date */}
-            <div className="col-md-3 p-3 bg-white border">
+            {/* Departure */}
+            <div className="col-12 col-md-3 mb-3 mb-md-0">
               <Form.Label className="fw-semibold small text-uppercase text-muted">
-                Departure Date
+                Departure
               </Form.Label>
-              <div className="input-group">
-                <Form.Control
-                  type="date"
-                  value={filters.departure}
-                  onChange={(e) =>
-                    setFilters({ ...filters, departure: e.target.value })
-                  }
-                  className="border-0 fs-4 fw-light text-center"
-                />
-                <span className="input-group-text bg-white border-0">
-                  <i className="fas fa-calendar-check text-muted"></i>
-                </span>
-              </div>
+              <Form.Control
+                type="date"
+                className="text-center"
+                value={filters.departure}
+                onChange={(e) =>
+                  setFilters({ ...filters, departure: e.target.value })
+                }
+              />
             </div>
 
             {/* People */}
-            <div className="col-md-2 p-3 bg-white border">
+            <div className="col-12 col-md-2 mb-3 mb-md-0">
               <Form.Label className="fw-semibold small text-uppercase text-muted">
                 People
               </Form.Label>
-              <div className="input-group">
-                <Form.Control
-                  type="number"
-                  min="1"
-                  value={filters.people}
-                  onChange={(e) =>
-                    setFilters({ ...filters, people: e.target.value })
-                  }
-                  className="border-0 fs-4 fw-light text-center"
-                />
-                <span className="input-group-text bg-white border-0">
-                  <i className="fas fa-user text-muted"></i>
-                </span>
-              </div>
+              <Form.Control
+                type="number"
+                min="1"
+                className="text-center"
+                value={filters.people}
+                onChange={(e) =>
+                  setFilters({ ...filters, people: e.target.value })
+                }
+              />
             </div>
 
-            {/* Check Availability */}
-            <div className="col-md-2 p-3 d-flex align-items-center justify-content-center">
+            {/* Apply */}
+            <div className="col-6 col-md-2 d-grid">
               <Button
                 type="submit"
-                className="w-100 fw-bold text-uppercase"
-                style={{ backgroundColor: "#8b6f47", border: "none" }}
+                className="btn-primary fw-bold text-uppercase"
               >
-                Check Availability
+                Check
               </Button>
             </div>
 
             {/* Reset */}
-            <div className="col-md-2 p-3 d-flex align-items-center justify-content-center">
+            <div className="col-6 col-md-2 d-grid">
               <Button
                 type="button"
                 onClick={handleReset}
-                className="w-100 fw-bold text-uppercase"
-                style={{
-                  backgroundColor: "#ccc",
-                  border: "none",
-                  color: "#333",
-                }}
+                className="btn-outline-secondary fw-bold text-uppercase"
               >
                 Reset
               </Button>
@@ -169,25 +144,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="ourRooms">
-        <div className="container">
-          <h2>Our Rooms</h2>
-          <div>
-            {" "}
-            <img className="iconDivider" src={icon} />
-          </div>
-          <p>
-            When you host a party or family reunion, the special celebrations
-            let you streng then bonds with
+      {/* Our Rooms */}
+      <section id="ourRooms" className="py-5">
+        <div className="container text-center">
+          <h2 className="fw-bold text-dark">Our Rooms</h2>
+          <img className="iconDivider" src={icon} alt="divider" />
+          <p className="text-muted">
+            Discover unmatched comfort in our beautifully designed rooms.
           </p>
-
           <RoomCard rooms={filteredRooms} />
         </div>
       </section>
 
-      <section id="footer">
-        <Footer />
-      </section>
+      <Footer />
     </div>
   );
 }

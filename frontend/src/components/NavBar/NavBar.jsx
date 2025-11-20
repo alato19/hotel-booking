@@ -3,8 +3,10 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { FaUserCircle } from "react-icons/fa";
 import Logo from "../../assets/sky-logo-header.png";
-import "../NavBar/NavBar.css";
+import "./NavBar.css";
 import { useAuthenticateContext } from "../../context/AuthenticateContext";
 
 function NavBar() {
@@ -31,50 +33,49 @@ function NavBar() {
     >
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <img
-            src={Logo}
-            alt="Hotel Paradise Logo"
-            height="60"
-            className="d-inline-block align-top"
-          />
+          <img src={Logo} alt="Hotel Paradise Logo" className="brand-logo" />
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="main-nav" />
+
         <Navbar.Collapse id="main-nav">
           <Nav className="ms-auto align-items-center">
             <Nav.Link as={NavLink} to="/" end>
-              HOME
+              Home
             </Nav.Link>
             <Nav.Link as={NavLink} to="/rooms">
-              ROOMS
+              Rooms
             </Nav.Link>
             <Nav.Link as={NavLink} to="/contact">
-              CONTACT
+              Contact
             </Nav.Link>
 
             {authUser ? (
-              <>
-                <Nav.Link
-                  as={NavLink}
-                  to={authUser.role === "admin" ? "/admin" : "/dashboard"}
-                  className="fw-semibold text-primary"
-                >
-                  Welcome,{" "}
-                  <span className="fw-bold">
+              <NavDropdown
+                title={
+                  <span className="d-flex align-items-center gap-2">
+                    <FaUserCircle size={20} />
                     {authUser.firstname || authUser.email}
                   </span>
-                </Nav.Link>
-                <Nav.Link
-                  onClick={handleLogout}
-                  className="fw-bold text-danger"
-                  style={{ cursor: "pointer" }}
+                }
+                id="user-menu"
+                align="end"
+                className="user-dropdown"
+              >
+                <NavDropdown.Item
+                  as={Link}
+                  to={authUser.role === "admin" ? "/admin" : "/dashboard"}
                 >
-                  LOGOUT
-                </Nav.Link>
-              </>
+                  Dashboard
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
             ) : (
               <Nav.Link as={NavLink} to="/login">
-                LOGIN
+                Login
               </Nav.Link>
             )}
           </Nav>

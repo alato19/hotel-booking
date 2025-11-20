@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Tabs, Tab } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuthenticateContext } from "../context/AuthenticateContext";
 
@@ -10,80 +10,62 @@ import Profile from "../components/User/Profile";
 import MyBookings from "../components/User/MyBookings";
 import Support from "../components/User/Support";
 import optHeaderBackground from "../assets/header.jpg";
+import "./UserDashboard.css";
 
 export default function UserDashboard() {
   const [activeTab, setActiveTab] = useState("profile");
   const { authUser, isAuthChecked } = useAuthenticateContext();
   const navigate = useNavigate();
 
-  // ✅ Redirect to login if not authenticated
   useEffect(() => {
     if (isAuthChecked && (!authUser || authUser.role !== "user")) {
       navigate("/login");
     }
   }, [authUser, isAuthChecked, navigate]);
 
-  // ✅ Show a loader while auth is being checked
   if (!isAuthChecked) {
     return <div className="text-center mt-5">Checking authentication...</div>;
   }
 
   return (
-    <div className="position-relative">
+    <>
       <NavBar />
 
       {/* Hero section */}
       <section
-        className="text-white d-flex align-items-center"
+        className="dashboard-hero text-white d-flex align-items-center"
         style={{
           backgroundImage: `url(${optHeaderBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "50vh",
+          height: "40vh",
           width: "100%",
         }}
       >
         <div className="container text-center">
-          <h1 className="display-3 fw-bold mt-5">Your Dashboard</h1>
-          <p className="lead text-white">
-            View your bookings and manage your profile
-          </p>
+          <h1 className="fw-bold">Your Dashboard</h1>
+          <p className="lead">View your bookings and manage your profile</p>
         </div>
       </section>
 
       {/* Main content */}
-      <div className="container py-5">
-        <Container fluid className="mt-5 pt-4">
-          <Row>
-            {/* Sidebar */}
-            <Col md={3} lg={2} className="bg-light min-vh-100 p-3">
-              <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-            </Col>
+      <Container className="py-5">
+        <Row>
+          {/* Sidebar */}
+          <Col xs={12} md={3} className="mb-4">
+            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+          </Col>
 
-            {/* Tabs content */}
-            <Col md={9} lg={10} className="p-4">
-              <Tabs
-                activeKey={activeTab}
-                onSelect={(k) => setActiveTab(k)}
-                id="dashboard-tabs"
-                className="mb-3"
-              >
-                <Tab eventKey="profile" title="Profile">
-                  <Profile />
-                </Tab>
-                <Tab eventKey="bookings" title="My Bookings">
-                  <MyBookings />
-                </Tab>
-                <Tab eventKey="support" title="Support">
-                  <Support />
-                </Tab>
-              </Tabs>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+          {/* Main content area */}
+          <Col xs={12} md={9}>
+            {activeTab === "profile" && <Profile />}
+            {activeTab === "bookings" && <MyBookings />}
+            {activeTab === "support" && <Support />}
+          </Col>
+        </Row>
+      </Container>
 
       <Footer />
-    </div>
+    </>
   );
 }

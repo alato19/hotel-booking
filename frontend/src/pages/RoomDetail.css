@@ -1,0 +1,35 @@
+/* HERO */
+.roomdetail-hero {
+  min-height: 40vh;
+  width: 100%;
+  padding-top: 90px;
+}
+
+@media (max-width: 576px) {
+  .roomdetail-hero {
+    min-height: 32vh;
+  }
+}
+
+.roomdetail-hero h1 {
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+}
+
+/* IMAGE */
+.roomdetail-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 380px;
+}
+
+@media (max-width: 576px) {
+  .roomdetail-img {
+    max-height: 250px;
+  }
+}
+
+/* INFO LIST */
+.room-info-list li {
+  font-size: 0.95rem;
+}

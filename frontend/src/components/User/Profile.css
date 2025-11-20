@@ -1,0 +1,10 @@
+.profile-card {
+  padding: 1rem;
+}
+
+@media (max-width: 576px) {
+  .profile-card {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+}

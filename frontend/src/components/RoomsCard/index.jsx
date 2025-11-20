@@ -1,3 +1,4 @@
+//index.jsx
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
@@ -7,6 +8,7 @@ import room3 from "../../assets/our-3.jpg";
 import room4 from "../../assets/our-4.jpg";
 import room5 from "../../assets/our-5.jpg";
 import room6 from "../../assets/our-6.jpg";
+import "./RoomCard.css";
 
 const roomImages = {
   1: room1,
@@ -22,37 +24,41 @@ export default function RoomCard({ rooms }) {
     <div className="row g-4">
       {rooms.map((room) => (
         <div key={room.id} className="col-12 col-md-6 col-lg-4">
-          <Card className="h-100 shadow-sm">
+          <Card className="room-card h-100 border-0 shadow-sm">
             <img
               src={roomImages[room.id] || room1}
               alt={room.title}
-              className="img-fluid rounded shadow-sm"
-              style={{ objectFit: "cover" }}
+              className="img-fluid room-card-image"
             />
-            <Card.Body>
-              <Card.Title className="mb-1">{room.title}</Card.Title>
 
-              <div className="text-muted small mb-2">
+            <Card.Body>
+              <Card.Title className="fw-bold text-dark mb-2">
+                {room.title}
+              </Card.Title>
+
+              <small className="text-muted d-block mb-2">
                 Sleeps {room.maxPeople} •{" "}
                 {room.hasBalcony ? "Balcony" : "No Balcony"} •{" "}
                 {room.oceanView ? "Ocean view" : "City view"}
-              </div>
+              </small>
 
-              <Card.Text className="mb-3">{room.description}</Card.Text>
+              <Card.Text className="text-muted room-description mb-3">
+                {room.description}
+              </Card.Text>
 
               <div className="d-flex justify-content-between align-items-center">
-                <div className="fw-semibold">
-                  <span className="text-muted small">
-                    {room.price}€ / night
-                  </span>
-                </div>
+                <span className="fw-semibold text-primary">
+                  {room.price}€ / night
+                </span>
+
                 <Button
                   as={Link}
                   to={`/rooms/${room.id}`}
-                  variant="outline-primary"
+                  variant="primary"
                   size="sm"
+                  className="fw-semibold"
                 >
-                  View details
+                  View Details
                 </Button>
               </div>
             </Card.Body>

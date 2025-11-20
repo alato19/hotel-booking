@@ -1,0 +1,47 @@
+/* Hero Section */
+.rooms-hero {
+  height: 40vh;
+  width: 100%;
+  padding-top: 90px; /* space for navbar */
+}
+
+@media (max-width: 576px) {
+  .rooms-hero {
+    height: 30vh;
+  }
+}
+
+.rooms-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+/* Room List Card */
+.room-item {
+  gap: 1rem;
+  transition: background-color 0.2s;
+}
+
+.room-item:hover {
+  background-color: rgba(13, 110, 253, 0.06);
+}
+
+.room-thumb {
+  width: 140px;
+  height: 95px;
+  object-fit: cover;
+}
+
+@media (max-width: 576px) {
+  .room-thumb {
+    width: 100px;
+    height: 70px;
+  }
+}
+
+.room-title {
+  color: #000;
+}
+
+.room-meta span {
+  font-size: 0.9rem;
+}

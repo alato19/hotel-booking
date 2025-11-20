@@ -1,3 +1,4 @@
+//RoomDetail.jsx
 import axios from "axios";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useRoomContext } from "../context/RoomContext";
@@ -13,6 +14,7 @@ import room3 from "../assets/our-3.jpg";
 import room4 from "../assets/our-4.jpg";
 import room5 from "../assets/our-5.jpg";
 import room6 from "../assets/our-6.jpg";
+import "./RoomDetail.css";
 
 const roomImages = {
   1: room1,
@@ -42,23 +44,18 @@ export default function RoomDetail() {
     }
 
     try {
-      const res = await axios.post(`http://localhost:3000/bookings`, {
-        userId: authUser.id,
-        roomId: room.id,
-      });
-
-      alert(
-        `Booking for ${room.title} is waiting for approval. You will get notified.`
+      const res = await axios.post(
+        `https://hotel-booking-d4se.onrender.com/bookings`,
+        {
+          userId: authUser.id,
+          roomId: room.id,
+        }
       );
-      console.log("Booking result:", res.data);
 
-      // ✅ automatically refresh bookings
-      if (typeof refreshBookings === "function") {
-        refreshBookings();
-      }
+      alert(`Booking requested! Waiting for confirmation.`);
+      if (typeof refreshBookings === "function") refreshBookings();
     } catch (error) {
-      console.error("Booking error:", error.response?.data || error.message);
-      alert("Booking failed. Please try again.");
+      alert("Booking failed. Try again.");
     }
   };
 
@@ -66,41 +63,41 @@ export default function RoomDetail() {
     <div className="position-relative">
       <NavBar />
 
-      {/* Hero section */}
+      {/* Hero */}
       <section
-        className="text-white d-flex align-items-center"
+        className="roomdetail-hero text-white d-flex align-items-center justify-content-center"
         style={{
           backgroundImage: `url(${optHeaderBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "50vh",
-          width: "100%",
         }}
       >
-        <div className="container text-center">
-          <h1 className="display-3 fw-bold mt-5">{room.title}</h1>
-          <p className="lead text-white">
-            {room.oceanView ? "Ocean View" : "Comfort & Relaxation"}
+        <div className="text-center">
+          <h1 className="fw-bold">{room.title}</h1>
+          <p className="lead">
+            {room.oceanView ? "Ocean View Experience" : "Comfort & Relaxation"}
           </p>
         </div>
       </section>
 
-      {/* Room details */}
+      {/* Content */}
       <div className="container py-5">
-        <div className="row">
-          <div className="col-lg-7 mb-4">
+        <div className="row g-4">
+          {/* Room Image */}
+          <div className="col-lg-7">
             <img
               src={roomImages[room.id] || room1}
               alt={room.title}
-              className="img-fluid rounded shadow-sm"
+              className="img-fluid rounded shadow-sm roomdetail-img"
             />
           </div>
 
+          {/* Room Info */}
           <div className="col-lg-5">
-            <h2 className="fw-bold mb-3">Room Information</h2>
+            <h3 className="fw-bold text-primary mb-3">Room Information</h3>
             <p className="mb-4">{room.description}</p>
 
-            <ul className="list-group list-group-flush mb-4">
+            <ul className="room-info-list list-group mb-4">
               <li className="list-group-item">
                 <strong>Price:</strong> {room.price} € / night
               </li>
@@ -114,28 +111,24 @@ export default function RoomDetail() {
                 <strong>Ocean View:</strong> {room.oceanView ? "Yes" : "No"}
               </li>
               <li className="list-group-item">
-                <strong>Booked:</strong> {room.isBooked ? "Yes" : "No"}
-              </li>
-              <li className="list-group-item">
-                <strong>Available:</strong> {room.availableFrom || "-"} →{" "}
+                <strong>Availability:</strong> {room.availableFrom || "-"} →{" "}
                 {room.availableTo || "-"}
               </li>
             </ul>
 
+            {/* Booking Button */}
             {!authUser ? (
               <Link
                 to="/login"
                 state={{ from: location.pathname }}
-                className="btn btn-lg w-100 fw-bold"
-                style={{ backgroundColor: "#8b6f47", color: "white" }}
+                className="btn btn-primary btn-lg w-100 fw-bold"
               >
                 Login to Book
               </Link>
             ) : (
               <button
                 onClick={handleBooking}
-                className="btn btn-lg w-100 fw-bold"
-                style={{ backgroundColor: "#8b6f47", color: "white" }}
+                className="btn btn-primary btn-lg w-100 fw-bold"
                 disabled={room.isBooked}
               >
                 {room.isBooked ? "Currently Unavailable" : "Book Now"}

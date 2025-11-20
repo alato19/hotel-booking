@@ -1,6 +1,7 @@
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { useState } from "react";
 import { useAuthenticateContext } from "../../context/AuthenticateContext";
+import "./Support.css";
 
 export default function Support() {
   const { authUser } = useAuthenticateContext();
@@ -30,70 +31,63 @@ export default function Support() {
     }
   };
 
-  return (
-    <div style={{ maxWidth: "600px" }}>
-      <h3 className="mb-4">Contact Support</h3>
+  <div className="support-wrapper">
+    <h3 className="text-primary fw-bold mb-4">Contact Support</h3>
 
-      {sent && (
-        <Alert
-          variant="success"
-          onClose={() => setSent(false)}
-          dismissible
-          className="shadow-sm"
-        >
-          Message sent successfully! Our team will get back to you soon.
-        </Alert>
-      )}
+    {sent && (
+      <Alert
+        variant="success"
+        onClose={() => setSent(false)}
+        dismissible
+        className="shadow-sm"
+      >
+        Message sent successfully! Our team will get back to you soon.
+      </Alert>
+    )}
 
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Subject</Form.Label>
-          <Form.Control
-            type="text"
-            name="subject"
-            placeholder="Enter subject"
-            value={form.subject}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3">
+        <Form.Label>Subject</Form.Label>
+        <Form.Control
+          type="text"
+          name="subject"
+          placeholder="Enter subject"
+          value={form.subject}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Your Message</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={4}
-            name="message"
-            placeholder="Type your message..."
-            value={form.message}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Your Message</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={4}
+          name="message"
+          placeholder="Type your message..."
+          value={form.message}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
 
-        <Button
-          variant="secondary"
-          type="submit"
-          disabled={loading}
-          style={{ backgroundColor: "#8b6f47", border: "none" }}
-        >
-          {loading ? (
-            <>
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-                className="me-2"
-              />
-              Sending...
-            </>
-          ) : (
-            "Send Message"
-          )}
-        </Button>
-      </Form>
-    </div>
-  );
+      <Button type="submit" variant="primary" disabled={loading}>
+        {loading ? (
+          <>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="me-2"
+            />
+            Sending...
+          </>
+        ) : (
+          "Send Message"
+        )}
+      </Button>
+    </Form>
+  </div>;
 }

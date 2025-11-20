@@ -1,0 +1,11 @@
+/* Prevent collision with navbar */
+.dashboard-hero {
+  padding-top: 90px;
+}
+
+/* Narrow screens: reduce hero height */
+@media (max-width: 576px) {
+  .dashboard-hero {
+    height: 30vh;
+  }
+}

@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://hotel-booking-d4se.onrender.com";
 
 export async function get_bookings_services(userId) {
   if (!userId) throw new Error("userId is required to fetch bookings");

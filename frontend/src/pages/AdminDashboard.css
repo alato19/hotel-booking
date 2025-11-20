@@ -1,0 +1,9 @@
+.admin-hero {
+  padding-top: 90px; /* prevent navbar overlap */
+}
+
+@media (max-width: 576px) {
+  .admin-hero {
+    height: 30vh;
+  }
+}

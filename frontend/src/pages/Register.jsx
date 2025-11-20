@@ -1,11 +1,13 @@
+//Register.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import { useAuthenticateContext } from "../context/AuthenticateContext";
 
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import optHeaderBackground from "../assets/header.jpg";
+import "./Register.css";
 
 export default function Register() {
   const { register } = useAuthenticateContext();
@@ -34,11 +36,8 @@ export default function Register() {
         alert("Account created successfully! You can now log in.");
         navigate("/login");
       }
-    } catch (error) {
-      console.error("Registration error:", error);
-      alert(
-        "Registration failed. Please check your information and try again."
-      );
+    } catch {
+      alert("Registration failed. Try again.");
     }
   };
 
@@ -46,86 +45,94 @@ export default function Register() {
     <div className="position-relative">
       <NavBar />
 
+      {/* Hero */}
       <section
-        className="text-white d-flex align-items-center"
+        className="register-hero text-white d-flex align-items-center justify-content-center text-center"
         style={{
           backgroundImage: `url(${optHeaderBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "50vh",
-          width: "100%",
         }}
       >
-        <div className="container header text-center">
-          <h1 className="display-3 fw-bold">Create your account</h1>
-          <p className="lead text-white">Use the form below</p>
+        <div>
+          <h1 className="fw-bold">Create Your Account</h1>
+          <p className="lead">Complete the form below to get started</p>
         </div>
       </section>
 
-      <div className="container mt-5" style={{ maxWidth: "400px" }}>
-        <h2 className="text-center mb-4">Create Account</h2>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="first_name">
-            <Form.Label>Firstname</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter firstname"
-              name="firstname"
-              value={values.firstname}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+      {/* Form */}
+      <div className="container py-5 d-flex justify-content-center">
+        <Card className="shadow-sm p-4 register-card">
+          <h3 className="fw-bold text-center text-primary mb-4">Register</h3>
 
-          <Form.Group className="mb-3" controlId="last_name">
-            <Form.Label>Lastname</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter lastname"
-              name="lastname"
-              value={values.lastname}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstname"
+                placeholder="Enter first name"
+                value={values.firstname}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="email_field">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastname"
+                placeholder="Enter last name"
+                value={values.lastname}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="password_field">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Enter password"
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter email"
+                value={values.email}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
-          <Button type="submit" variant="primary" className="w-100">
-            Register
-          </Button>
-        </Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                value={values.password}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
-        <p className="text-center mt-3">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
+            <Button
+              type="submit"
+              className="w-100 fw-semibold"
+              variant="primary"
+            >
+              Register
+            </Button>
+          </Form>
+
+          <p className="text-center small mt-3">
+            Already have an account?{" "}
+            <Link to="/login" className="fw-bold text-primary">
+              Login
+            </Link>
+          </p>
+        </Card>
       </div>
 
-      <section id="footer">
-        <Footer />
-      </section>
+      <Footer />
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import { Card, Button } from "react-bootstrap";
 import { useAuthenticateContext } from "../../context/AuthenticateContext";
+import "./Profile.css";
 
 export default function Profile() {
   const { authUser } = useAuthenticateContext();
 
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm profile-card">
       <Card.Body>
         <Card.Title className="fw-bold mb-3">Profile</Card.Title>
 

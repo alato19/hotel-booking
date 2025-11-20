@@ -1,109 +1,81 @@
 import Logo from "../../assets/sky-logo-header.png";
+import { FaFacebookF, FaInstagram, FaTripadvisor } from "react-icons/fa";
+import "./Footer.css";
 
 export default function Footer() {
   return (
-    <footer className="bg-dark text-light pt-5 pb-3 mt-5">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-3 mb-4">
-            <a
-              href="/"
-              className="d-flex align-items-center text-light text-decoration-none"
-            >
-              <img src={Logo} alt="Hotel Paradise Logo" width="120" />
-            </a>
+    <footer className="footer mt-5">
+      <div className="container py-5">
+        <div className="row gy-4">
+          {/* Logo + short text */}
+          <div className="col-md-3">
+            <img
+              src={Logo}
+              alt="Hotel Paradise Logo"
+              className="footer-logo mb-3"
+            />
+            <p className="small text-muted">
+              Experience luxury and comfort at Hotel Paradise.
+            </p>
           </div>
 
-          <div className="col-md-3 mb-4">
-            <ul className="list-unstyled">
+          {/* Useful links */}
+          <div className="col-6 col-md-3">
+            <h6 className="fw-bold text-uppercase footer-title">Explore</h6>
+            <ul className="list-unstyled footer-links">
               <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Site Map
-                </a>
+                <a href="/rooms">Rooms</a>
               </li>
               <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Term & Conditions
-                </a>
+                <a href="/contact">Contact Us</a>
               </li>
               <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Privacy Policy
-                </a>
+                <a href="/login">Login</a>
               </li>
               <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Help
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Affiliate
-                </a>
+                <a href="/register">Create Account</a>
               </li>
             </ul>
           </div>
 
-          <div className="col-md-3 mb-4">
-            <ul className="list-unstyled">
+          {/* Legal */}
+          <div className="col-6 col-md-3">
+            <h6 className="fw-bold text-uppercase footer-title">Legal</h6>
+            <ul className="list-unstyled footer-links">
               <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Our Location
-                </a>
+                <a href="/">Terms & Conditions</a>
               </li>
               <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Career
-                </a>
+                <a href="/">Privacy Policy</a>
               </li>
               <li>
-                <a href="/" className="text-light text-decoration-none">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Contact Us
-                </a>
+                <a href="/">FAQ</a>
               </li>
             </ul>
           </div>
 
-          <div className="col-md-3 mb-4">
-            <ul className="list-unstyled">
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  FAQs
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  News
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Photo & Video
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Restaurant
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-light text-decoration-none">
-                  Gift Card
-                </a>
-              </li>
-            </ul>
+          {/* Socials */}
+          <div className="col-md-3">
+            <h6 className="fw-bold text-uppercase footer-title">Follow Us</h6>
+            <div className="d-flex gap-3 fs-4 mt-2">
+              <a href="#" aria-label="Instagram">
+                <FaInstagram />
+              </a>
+              <a href="#" aria-label="Facebook">
+                <FaFacebookF />
+              </a>
+              <a href="#" aria-label="Tripadvisor">
+                <FaTripadvisor />
+              </a>
+            </div>
           </div>
         </div>
 
-        <hr className="border-secondary" />
-
-        <div className="text-center text-light small">
-          &copy; {new Date().getFullYear()} Hotel Paradise
+        <div className="footer-bottom text-center mt-4">
+          <small className="text-muted">
+            &copy; {new Date().getFullYear()} Hotel Paradise. All rights
+            reserved.
+          </small>
         </div>
       </div>
     </footer>

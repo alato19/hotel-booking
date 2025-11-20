@@ -1,59 +1,53 @@
-.header > h1 {
-  font-size: 70px !important;
-  font-weight: 200;
-  font-family: "Playfair Display", serif;
-  color: #fff;
-  margin-top: 180px !important;
-  margin-bottom: 17px;
-  text-shadow: none;
-  text-align: center;
-  line-height: 1.2;
+/* HERO SECTION */
+.home-hero {
+  min-height: 75vh;
+  width: 100%;
+  padding-top: 100px; /* space under navbar */
+}
+
+.text-shadow {
+  text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.home-hero h1 {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 700;
+}
+
+.home-hero p {
+  font-size: clamp(1rem, 2.3vw, 1.4rem);
+}
+
+/* SEARCH FORM */
+.hero-form-container {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.hero-form-container .form-label {
+  font-size: 0.7rem;
   letter-spacing: 1px;
 }
 
-.header > p {
-  font-size: 24.75px;
-  font-weight: 400;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  text-shadow: none;
-  display: inline-flex;
-  align-items: center;
+/* Stack better on phones */
+@media (max-width: 576px) {
+  .hero-form-container form {
+    border-radius: 0.75rem;
+  }
 }
 
-#ourRooms {
-  text-align: center;
+/* OUR ROOMS SECTION */
+#ourRooms h2 {
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
 }
 
-.container > h2 {
-  margin-top: 80px;
-  font-size: 50px !important;
-  font-weight: 130;
-  font-family: "Playfair Display", serif;
-  color: #000000;
-  margin-bottom: 10px;
-  text-shadow: none;
-  text-align: center;
-  line-height: 1.7;
-  letter-spacing: 1px;
+#ourRooms p {
+  font-size: 1.1rem;
+  max-width: 650px;
+  margin: 10px auto 40px;
 }
 
 .iconDivider {
-  margin-bottom: 10px;
-}
-
-.container > p {
-  font-size: 20px !important;
-  font-family: "Playfair Display", serif;
-  color: #6c6c6c;
-  margin-bottom: 80px;
-  text-shadow: none;
-  text-align: center;
-  line-height: 1.2;
-  letter-spacing: 1px;
-}
-
-.btn + .btn {
-  margin-left: 10px;
+  width: 140px;
+  margin: 10px auto 20px;
 }

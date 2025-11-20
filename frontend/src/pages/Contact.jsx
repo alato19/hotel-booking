@@ -1,3 +1,4 @@
+//Contact.jsx
 import NavBar from "../components/NavBar/NavBar";
 import optHeaderBackground from "../assets/header.jpg";
 import Footer from "../components/Footer/Footer";
@@ -12,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { BsBuilding } from "react-icons/bs";
 import { useState } from "react";
+import "./Contact.css";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -33,37 +35,34 @@ export default function Contact() {
   };
 
   return (
-    <>
-      <div className="position-relative">
-        <NavBar />
+    <div className="position-relative">
+      <NavBar />
 
-        {/* Hero section with background */}
-        <section
-          className="text-white d-flex align-items-center"
-          style={{
-            backgroundImage: `url(${optHeaderBackground})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            height: "50vh",
-            width: "100%",
-          }}
-        >
-          <div className="container text-center">
-            <h1 className="display-3 fw-bold">Contact Us</h1>
-            <p className="lead text-white">We’d love to hear from you!</p>
-          </div>
-        </section>
-      </div>
+      {/* Hero */}
+      <section
+        className="contact-hero text-white d-flex align-items-center justify-content-center text-center"
+        style={{
+          backgroundImage: `url(${optHeaderBackground})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div>
+          <h1 className="fw-bold">Contact Us</h1>
+          <p className="lead">We’d love to hear from you</p>
+        </div>
+      </section>
 
-      <Container className="my-5">
+      {/* Main content */}
+      <Container className="py-5">
         <Row className="g-4">
-          {/* Left column: Form */}
+          {/* Left: Form */}
           <Col lg={6}>
-            <Card className="shadow">
-              <Card.Body className="p-4">
-                <div className="text-center mb-4">
-                  <p className="h4 fw-bold">Write to Us</p>
-                </div>
+            <Card className="shadow-sm contact-card">
+              <Card.Body>
+                <h4 className="fw-bold text-center mb-4 text-primary">
+                  Write to Us
+                </h4>
 
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3">
@@ -71,7 +70,6 @@ export default function Contact() {
                     <Form.Control
                       type="text"
                       name="name"
-                      placeholder="Enter your name"
                       value={form.name}
                       onChange={handleChange}
                       required
@@ -83,7 +81,6 @@ export default function Contact() {
                     <Form.Control
                       type="email"
                       name="email"
-                      placeholder="Enter your email"
                       value={form.email}
                       onChange={handleChange}
                       required
@@ -95,7 +92,6 @@ export default function Contact() {
                     <Form.Control
                       type="text"
                       name="subject"
-                      placeholder="Enter subject"
                       value={form.subject}
                       onChange={handleChange}
                       required
@@ -106,23 +102,21 @@ export default function Contact() {
                     <Form.Label>Your Message</Form.Label>
                     <Form.Control
                       as="textarea"
-                      name="message"
                       rows={4}
-                      placeholder="Write your message"
+                      name="message"
                       value={form.message}
                       onChange={handleChange}
                       required
                     />
                   </Form.Group>
 
-                  <div className="text-center">
+                  <div className="d-grid">
                     <Button
-                      variant="secondary"
                       type="submit"
-                      className="px-4 fw-bold"
-                      style={{ backgroundColor: "#8b6f47", border: "none" }}
+                      variant="primary"
+                      className="fw-semibold"
                     >
-                      Send
+                      Send Message
                     </Button>
                   </div>
                 </Form>
@@ -130,49 +124,41 @@ export default function Contact() {
             </Card>
           </Col>
 
-          {/* Right column: Info + Map */}
+          {/* Right: Contact Info */}
           <Col lg={6}>
-            <div className="p-4">
-              <h4 className="fw-bold mb-3">Contact Information</h4>
+            <div className="contact-info">
+              <h4 className="fw-bold text-primary mb-3">Contact Information</h4>
+
               <p>
-                <FaMapMarkerAlt className="me-2 text-muted" />
-                123 Paradise Street, Tirana, Albania
+                <FaMapMarkerAlt className="icon" /> 123 Paradise Street, Tirana,
+                Albania
               </p>
               <p>
-                <FaPhone className="me-2 text-muted" />
-                +355 44 123 456
+                <FaPhone className="icon" /> +355 44 123 456
               </p>
               <p>
-                <FaEnvelope className="me-2 text-muted" />
-                contact@hotelparadise.com
+                <FaEnvelope className="icon" /> contact@hotelparadise.com
               </p>
 
               <h5 className="fw-bold mt-4">Follow Us</h5>
-              <div className="d-flex gap-3 fs-4 mt-2">
-                <a href="#" className="text-dark">
+              <div className="social-links mt-2">
+                <a href="#">
                   <FaInstagram />
                 </a>
-                <a href="#" className="text-dark">
+                <a href="#">
                   <FaFacebook />
                 </a>
-                <a href="#" className="text-dark">
+                <a href="#">
                   <FaTripadvisor />
                 </a>
-                <a href="#" className="text-dark">
+                <a href="#">
                   <BsBuilding title="Booking.com" />
                 </a>
               </div>
 
-              <div className="mt-4">
-                {/* Placeholder Map (embed Google Maps later) */}
-                <div
-                  className="bg-light border rounded"
-                  style={{ height: "250px" }}
-                >
-                  <p className="text-center text-muted pt-5">
-                    [ Google Map Placeholder ]
-                  </p>
-                </div>
+              {/* Map Placeholder */}
+              <div className="map-placeholder mt-4">
+                [ Google Map Placeholder — coming soon ]
               </div>
             </div>
           </Col>
@@ -180,6 +166,6 @@ export default function Contact() {
       </Container>
 
       <Footer />
-    </>
+    </div>
   );
 }

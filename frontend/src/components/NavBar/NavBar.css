@@ -1,24 +1,62 @@
-.custom-navbar {
-  background-color: transparent;
-  transition: background-color 0.3s ease;
+/* Brand */
+.brand-logo {
+  max-height: 58px;
+  transition: transform 0.3s ease;
 }
 
-.custom-navbar .nav-link {
-  color: white !important;
+.brand-logo:hover {
+  transform: scale(1.06);
+}
+
+/* Navbar container */
+.custom-navbar {
+  background-color: #ffffff !important;
+  padding: 0.75rem 1rem;
+  transition: box-shadow 0.3s ease;
 }
 
 .custom-navbar.scrolled {
-  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.custom-navbar .scrolled .nav-link {
-  color: #fff !important;
+/* Links */
+.custom-navbar .nav-link {
+  color: #333 !important;
+  margin-left: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
 }
 
-.custom-navbar .nav-link.text-danger:hover {
-  color: #c0392b !important;
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+  color: #8b6f47 !important;
 }
 
-.custom-navbar .nav-link.text-secondary {
-  opacity: 0.7;
+/* Dropdown */
+.user-dropdown .dropdown-menu {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.user-dropdown .dropdown-item:hover {
+  background-color: #f5efe5;
+  color: #8b6f47;
+}
+
+/* Small screens */
+@media (max-width: 992px) {
+  .navbar-nav {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .custom-navbar .nav-link {
+    margin: 0.6rem 0;
+  }
+}
+
+.navbar-space {
+  padding-top: 80px;
 }

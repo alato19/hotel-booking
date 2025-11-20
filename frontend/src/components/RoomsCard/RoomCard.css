@@ -1,0 +1,31 @@
+.room-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 8px;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.room-card-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+@media (max-width: 576px) {
+  .room-card-image {
+    height: 170px;
+  }
+}
+
+/* Limit description height for even card alignment */
+.room-description {
+  height: 55px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* show 3 lines max */
+  -webkit-box-orient: vertical;
+}

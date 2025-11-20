@@ -1,0 +1,40 @@
+/* === Brand Theme Override === */
+
+/* Primary button color */
+.btn-primary {
+  background-color: #8b6f47 !important;
+  border-color: #8b6f47 !important;
+}
+
+/* Hover / active */
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #7a603d !important;
+  border-color: #7a603d !important;
+}
+
+/* Disabled */
+.btn-primary:disabled {
+  background-color: #c3b29b !important;
+  border-color: #c3b29b !important;
+}
+
+/* Form focus rings to match brand */
+.form-control:focus,
+.form-select:focus {
+  border-color: #8b6f47 !important;
+  box-shadow: 0 0 0 0.2rem rgba(139, 111, 71, 0.25) !important;
+}
+
+/* optional extra */
+.btn-outline-primary {
+  color: #8b6f47 !important;
+  border-color: #8b6f47 !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: #8b6f47 !important;
+  color: #fff !important;
+}

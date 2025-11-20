@@ -1,0 +1,27 @@
+/* Hero with navbar spacing */
+.login-hero {
+  min-height: 40vh;
+  width: 100%;
+  padding-top: 90px;
+}
+
+@media (max-width: 576px) {
+  .login-hero {
+    min-height: 32vh;
+  }
+}
+
+.login-hero h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+/* Login card styling */
+.login-card {
+  max-width: 420px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.login-card p a:hover {
+  text-decoration: underline;
+}

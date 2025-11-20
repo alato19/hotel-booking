@@ -1,0 +1,62 @@
+/* HERO */
+.contact-hero {
+  min-height: 40vh;
+  width: 100%;
+  padding-top: 90px; /* fix for navbar */
+}
+
+@media (max-width: 576px) {
+  .contact-hero {
+    min-height: 32vh;
+  }
+}
+
+.contact-hero h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+/* CARD */
+.contact-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+/* INFO SIDE */
+.contact-info p {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.contact-info .icon {
+  margin-right: 6px;
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+/* SOCIALS */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.social-links a {
+  color: #0d6efd;
+  transition: 0.2s;
+}
+
+.social-links a:hover {
+  color: #084298;
+}
+
+/* Map Placeholder */
+.map-placeholder {
+  height: 250px;
+  background: #eee;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  padding-top: 85px;
+  color: #888;
+  font-size: 0.9rem;
+}
